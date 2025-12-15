@@ -1,0 +1,61 @@
+.starfield {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(140% 140% at 50% 50%, #06050b 0%, #040208 45%, #010104 100%);
+    --mx: 0px;
+    --my: 0px;
+    --jx: 0px;
+    --jy: 0px;
+    --r: 0deg;
+}
+
+.starfield::before,
+.starfield::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background-repeat: repeat;
+    will-change: transform, opacity;
+    transition:
+            transform 900ms cubic-bezier(.2,.9,.2,1),
+            opacity 900ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* near stars */
+.starfield::before {
+    background-size: 180px 180px;
+    opacity: 0.9;
+    filter: blur(0.1px);
+    background-image:
+            radial-gradient(1.4px 1.4px at 20px 40px, rgba(255,255,255,0.9) 55%, transparent 56%),
+            radial-gradient(1px 1px at 60px 140px, rgba(255,255,255,0.6) 55%, transparent 56%),
+            radial-gradient(1.6px 1.6px at 100px 30px, rgba(255,255,255,0.8) 55%, transparent 56%),
+            radial-gradient(1px 1px at 140px 90px, rgba(255,255,255,0.5) 55%, transparent 56%),
+            radial-gradient(1.8px 1.8px at 170px 160px, rgba(255,255,255,1) 55%, transparent 56%),
+            radial-gradient(1.2px 1.2px at 30px 170px, rgba(255,255,255,0.7) 55%, transparent 56%),
+            radial-gradient(1.4px 1.4px at 120px 120px, rgba(255,255,255,0.85) 55%, transparent 56%),
+            radial-gradient(1px 1px at 160px 20px, rgba(255,255,255,0.4) 55%, transparent 56%);
+    transform:
+            translate3d(calc(var(--mx) * 0.9 + var(--jx)), calc(var(--my) * 0.9 + var(--jy)), 0)
+            rotate(var(--r))
+            scale(1.02);
+}
+
+/* far stars */
+.starfield::after {
+    background-size: 320px 320px;
+    opacity: 0.6;
+    filter: blur(0.35px);
+    background-image:
+            radial-gradient(1px 1px at 40px 200px, rgba(255,255,255,0.5) 55%, transparent 56%),
+            radial-gradient(1.2px 1.2px at 120px 60px, rgba(255,255,255,0.7) 55%, transparent 56%),
+            radial-gradient(1px 1px at 200px 260px, rgba(255,255,255,0.6) 55%, transparent 56%),
+            radial-gradient(1.4px 1.4px at 260px 100px, rgba(255,255,255,0.85) 55%, transparent 56%),
+            radial-gradient(1px 1px at 300px 180px, rgba(255,255,255,0.4) 55%, transparent 56%);
+    transform:
+            translate3d(calc(var(--mx) * 0.35 - var(--jx) * 0.25), calc(var(--my) * 0.35 - var(--jy) * 0.25), 0)
+            rotate(calc(var(--r) * -0.6))
+            scale(1);
+}

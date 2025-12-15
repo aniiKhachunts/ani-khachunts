@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+    --color-background: #050308;
+    --color-surface: #0B0710;
+    --color-burgundy: #8D1436;
+    --color-burgundySoft: #B7244B;
+    --color-deepGreen: #0C3B36;
+    --color-softBlue: #9BD5FF;
+    --color-textPrimary: #F7F4FF;
+    --color-textMuted: #A8A0BF;
+    --radius-xl: 1.25rem;
+    --radius-2xl: 1.75rem;
+    --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-textPrimary);
+    font-family: "Libre Baskerville", serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+}
+
+.handwritten {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+}
