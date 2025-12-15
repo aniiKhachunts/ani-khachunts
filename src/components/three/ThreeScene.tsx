@@ -10,6 +10,8 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 
 const ThreeScene: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null)
+    type DashLineUserData = { speed: number }
+    type DashLine2 = Line2 & { userData: DashLineUserData }
 
     useEffect(() => {
         let disposed = false
@@ -89,7 +91,7 @@ const ThreeScene: React.FC = () => {
             mat.depthTest = false
             mat.depthWrite = false
 
-            const line = new Line2(geo, mat)
+            const line = new Line2(geo, mat) as DashLine2
             line.position.z = z
             line.renderOrder = 10
 
@@ -104,7 +106,7 @@ const ThreeScene: React.FC = () => {
             mat.gapSize = gap
             mat.dashOffset = seed
 
-            ;(line.userData as any).speed = 0.9 + (seed % 0.35)
+            line.userData = { speed: 0.9 + (seed % 0.35) }
             return line
         }
 
@@ -227,10 +229,9 @@ const ThreeScene: React.FC = () => {
 
             if (outlineGroup) {
                 for (let i = 0; i < outlineGroup.children.length; i++) {
-                    const line = outlineGroup.children[i] as Line2
+                    const line = outlineGroup.children[i] as DashLine2
                     const mat = line.material as LineMaterial
-                    const speed = (line.userData as any).speed ?? 1
-                    mat.dashOffset = -(t * speed * 1.2)
+                    mat.dashOffset = -(t * line.userData.speed * 1.2)
                 }
             }
 
@@ -238,13 +239,19 @@ const ThreeScene: React.FC = () => {
         }
 
         function handleResize() {
-            const r = el.getBoundingClientRect()
+            const elNow = containerRef.current
+            if (!elNow) return
+
+            const r = elNow.getBoundingClientRect()
             const nw = r.width || window.innerWidth
             const nh = r.height || window.innerHeight
+
             camera.aspect = nw / nh
             camera.updateProjectionMatrix()
+
             renderer.setSize(nw, nh)
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+
             outlineMaterial.resolution.set(nw, nh)
         }
 
@@ -257,10 +264,16 @@ const ThreeScene: React.FC = () => {
 
             if (outlineGroup) {
                 scene.remove(outlineGroup)
-                outlineGroup.traverse((o) => {
-                    const anyObj = o as any
-                    if (anyObj.geometry) anyObj.geometry.dispose?.()
-                    if (anyObj.material) anyObj.material.dispose?.()
+                outlineGroup.traverse((obj) => {
+                    if (obj instanceof Line2) obj.geometry.dispose()
+
+                    const mesh = obj as THREE.Mesh
+                    const geo = mesh.geometry
+                    if (geo) (geo as THREE.BufferGeometry).dispose()
+
+                    const mat = (mesh.material ?? null) as THREE.Material | THREE.Material[] | null
+                    if (Array.isArray(mat)) mat.forEach((m) => m.dispose())
+                    else mat?.dispose()
                 })
                 outlineGroup = null
             }

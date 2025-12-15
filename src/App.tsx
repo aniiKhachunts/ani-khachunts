@@ -1,14 +1,13 @@
-
 import HomePage from './pages/HomePage/HomePage'
+import {Route, Routes} from "react-router-dom";
 
 function App() {
     return (
-        <HomePage />
-        // <Layout>
-        //     <Routes>
-        //         <Route path="/" element={<HomePage />} />
-        //     </Routes>
-        // </Layout>
+        <>
+            <Routes>
+                <Route path="/" element={<HomePage/>}/>
+            </Routes>
+        </>
     )
 }
 

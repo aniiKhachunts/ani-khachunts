@@ -14,7 +14,7 @@ function HeroSection() {
                 <div className="w-full max-w-6xl mx-auto px-6 sm:px-10 lg:px-20 mt-[55vh] pb-12">
                     <div className="space-y-10">
                         <p className="handwritten text-3xl sm:text-4xl text-white/90">
-                            Creator and problem <span className="text-[#005959]">solver</span>
+                            Creative <span className="text-[#005959]">developer</span>
                         </p>
 
                         <div className="flex justify-end">
