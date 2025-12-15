@@ -19,13 +19,75 @@ body {
     color: var(--color-textPrimary);
     font-family: "Libre Baskerville", serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
+    font-weight: < weight >;
     font-style: normal;
 }
 
 .handwritten {
     font-family: "Dancing Script", cursive;
     font-optical-sizing: auto;
-    font-weight: <weight>;
     font-style: normal;
 }
+
+.vh-tilt {
+    perspective: 1200px;
+    perspective-origin: 100% 50%;
+    pointer-events: none;
+}
+
+.vh-link {
+    --vh-stroke: #005959;
+
+    pointer-events: auto;
+    position: relative;
+    display: inline-block;
+
+    transform-style: preserve-3d;
+    transform-origin: right center;
+    transform: rotateY(-55deg) translateZ(0);
+
+    text-decoration: none;
+    font-family: "Geom", sans-serif;
+    font-weight: 900;
+    line-height: 0.9em;
+
+    color: var(--vh-stroke);
+    -webkit-text-stroke: 0px var(--vh-stroke);
+
+    transition:
+            transform 1200ms cubic-bezier(.075,.82,.165,1),
+            color 400ms ease,
+            -webkit-text-stroke-width 400ms ease;
+
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.vh-link:hover {
+    transform: rotateY(-15deg) translateZ(34px);
+
+    color: transparent;
+    -webkit-text-stroke-width: 2px;
+}
+
+.vh-link::before {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+
+    color: transparent;
+    -webkit-text-stroke: 2px var(--vh-stroke);
+
+    opacity: 0;
+    transform: translateZ(14px);
+    transition: opacity 350ms ease, transform 1200ms cubic-bezier(.075,.82,.165,1);
+
+    pointer-events: none;
+    backface-visibility: hidden;
+}
+
+.vh-link:hover::before {
+    opacity: 1;
+    transform: translateZ(48px);
+}
+

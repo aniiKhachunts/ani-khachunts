@@ -52,7 +52,7 @@ function StarfieldCanvas() {
             canvas.style.height = `${h}px`
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-            const density = w * h > 900000 ? 0.00018 : 0.00022
+            const density = w * h > 900000 ? 0.00032 : 0.00038
             const count = Math.floor(w * h * density)
 
             stars = Array.from({ length: count }, () => {
