@@ -35,7 +35,7 @@ export default function HeroSocialRail() {
         },
         {
             label: "Instagram",
-            href: "https://www.instagram.com/",
+            href: "https://www.instagram.com/ani.khachunts?igsh=MWZuNDZwMWVqM21pMA%3D%3D&utm_source=qr",
             color: "#E1306C",
             svg: (
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
