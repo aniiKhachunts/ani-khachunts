@@ -1,12 +1,12 @@
-import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
-import { TTFLoader } from 'three/examples/jsm/loaders/TTFLoader.js'
-import { Font } from 'three/examples/jsm/loaders/FontLoader.js'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
-import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
-import { Line2 } from 'three/examples/jsm/lines/Line2.js'
-import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
+import { useEffect, useRef } from "react"
+import * as THREE from "three"
+import { TTFLoader } from "three/examples/jsm/loaders/TTFLoader.js"
+import { Font } from "three/examples/jsm/loaders/FontLoader.js"
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js"
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js"
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js"
+import { Line2 } from "three/examples/jsm/lines/Line2.js"
+import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js"
 
 const ThreeScene: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null)
@@ -34,13 +34,13 @@ const ThreeScene: React.FC = () => {
         renderer.toneMapping = THREE.ACESFilmicToneMapping
         renderer.toneMappingExposure = 1.15
 
-        renderer.domElement.style.position = 'absolute'
-        renderer.domElement.style.inset = '0'
-        renderer.domElement.style.width = '100%'
-        renderer.domElement.style.height = '100%'
-        renderer.domElement.style.pointerEvents = 'none'
+        renderer.domElement.style.position = "absolute"
+        renderer.domElement.style.inset = "0"
+        renderer.domElement.style.width = "100%"
+        renderer.domElement.style.height = "100%"
+        renderer.domElement.style.pointerEvents = "none"
 
-        el.innerHTML = ''
+        el.innerHTML = ""
         el.appendChild(renderer.domElement)
 
         const pmrem = new THREE.PMREMGenerator(renderer)
@@ -75,11 +75,39 @@ const ThreeScene: React.FC = () => {
         })
         outlineMaterial.resolution.set(w, h)
 
+        function getVisibleWidthAtZ(cam: THREE.PerspectiveCamera, z: number) {
+            const vFOV = THREE.MathUtils.degToRad(cam.fov)
+            const height = 2 * Math.tan(vFOV / 2) * Math.abs(z)
+            return height * cam.aspect
+        }
+
+        function fitTextToView(mesh: THREE.Mesh, cam: THREE.PerspectiveCamera) {
+            const geo = mesh.geometry as THREE.BufferGeometry
+            geo.computeBoundingBox()
+            const box = geo.boundingBox
+            if (!box) return
+
+            const textWidth = box.max.x - box.min.x
+            const visibleWidth = getVisibleWidthAtZ(cam, cam.position.z)
+            const margin = 0.88
+            const scale = Math.min(1, (visibleWidth * margin) / textWidth)
+            mesh.scale.setScalar(scale)
+
+            if (outlineGroup) outlineGroup.scale.copy(mesh.scale)
+
+            const mat = mesh.material as THREE.MeshPhysicalMaterial
+            if (scale < 0.75) {
+                mat.clearcoat = 0.85
+                mat.roughness = 0.28
+            } else {
+                mat.clearcoat = 1
+                mat.roughness = 0.22
+            }
+        }
+
         function makeStroke(points: THREE.Vector2[], z: number, seed: number) {
             const pts: number[] = []
-            for (let i = 0; i < points.length; i++) {
-                pts.push(points[i].x, points[i].y, 0)
-            }
+            for (let i = 0; i < points.length; i++) pts.push(points[i].x, points[i].y, 0)
 
             const geo = new LineGeometry()
             geo.setPositions(pts)
@@ -179,14 +207,13 @@ const ThreeScene: React.FC = () => {
             return g
         }
 
-
         const loader = new TTFLoader()
-        loader.load('/fonts/ChakraPetch-Bold.ttf', (res) => {
+        loader.load("/fonts/ChakraPetch-Bold.ttf", (res) => {
             if (disposed) return
 
             const font = new Font(res)
 
-            const geo = new TextGeometry('ANI KHACHUNTS', {
+            const geo = new TextGeometry("ANI KHACHUNTS", {
                 font,
                 size: 1,
                 depth: 0.35,
@@ -211,9 +238,10 @@ const ThreeScene: React.FC = () => {
 
             textMesh = new THREE.Mesh(geo, mat)
             textMesh.position.set(0, 0.35, 0)
+            fitTextToView(textMesh, camera)
             scene.add(textMesh)
 
-            outlineGroup = buildOutline(font, 'ANI KHACHUNTS')
+            outlineGroup = buildOutline(font, "ANI KHACHUNTS")
             outlineGroup.position.copy(textMesh.position)
             outlineGroup.scale.copy(textMesh.scale)
             scene.add(outlineGroup)
@@ -253,13 +281,15 @@ const ThreeScene: React.FC = () => {
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
 
             outlineMaterial.resolution.set(nw, nh)
+
+            if (textMesh) fitTextToView(textMesh, camera)
         }
 
-        window.addEventListener('resize', handleResize)
+        window.addEventListener("resize", handleResize)
 
         return () => {
             disposed = true
-            window.removeEventListener('resize', handleResize)
+            window.removeEventListener("resize", handleResize)
             if (animationId !== null) cancelAnimationFrame(animationId)
 
             if (outlineGroup) {
@@ -289,9 +319,7 @@ const ThreeScene: React.FC = () => {
             pmrem.dispose()
             renderer.dispose()
 
-            if (renderer.domElement.parentNode === el) {
-                el.removeChild(renderer.domElement)
-            }
+            if (renderer.domElement.parentNode === el) el.removeChild(renderer.domElement)
         }
     }, [])
 
