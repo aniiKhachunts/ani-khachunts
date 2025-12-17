@@ -3,8 +3,9 @@ import { Route, Routes, useLocation } from "react-router-dom"
 import { PageTransition } from "./components/transitions/PageTransition"
 import Home from "./pages/Home/Home"
 import About from "./pages/About/About"
-import CosmicCursor from "./components/CosmicCursor.tsx"
-import Header from "./components/layout/Header.tsx"
+import Projects from "./pages/Projects/Projects"
+import Header from "./components/layout/Header"
+import CosmicCursor from "./components/CosmicCursor"
 
 function AnimatedRoutes() {
     const location = useLocation()
@@ -13,7 +14,6 @@ function AnimatedRoutes() {
         <>
             <Header />
             <CosmicCursor />
-
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
                     <Route
@@ -29,6 +29,14 @@ function AnimatedRoutes() {
                         element={
                             <PageTransition>
                                 <About />
+                            </PageTransition>
+                        }
+                    />
+                    <Route
+                        path="/projects"
+                        element={
+                            <PageTransition>
+                                <Projects />
                             </PageTransition>
                         }
                     />
