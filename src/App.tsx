@@ -7,7 +7,7 @@ import Projects from "./pages/Projects/Projects"
 import Header from "./components/layout/Header"
 import CosmicCursor from "./components/CosmicCursor"
 import ProjectPage from "./pages/Projects/ProjectPage.tsx";
-import ScrollToTop from "./components/ScrollToTop.tsx";
+import ScrollToTop from "./helpers/ScrollToTop.tsx";
 
 function AnimatedRoutes() {
     const location = useLocation()
