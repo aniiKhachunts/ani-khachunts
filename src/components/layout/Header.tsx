@@ -50,8 +50,6 @@ export default function Header() {
                                   onClick={() => navigate("/")}>
                                 Ani Khachunts
                             </span>
-
-                            <div className="w-24"/>
                         </div>
                     </div>
                 </motion.header>
