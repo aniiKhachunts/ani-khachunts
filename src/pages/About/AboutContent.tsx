@@ -9,100 +9,130 @@ export default function AboutContent() {
                 transition={{duration: 0.7, ease: [0.2, 0.8, 0.2, 1]}}
                 className="lg:col-span-6 space-y-10 relative z-10 order-2 lg:order-1"
             >
-                <section className="space-y-5">
-                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
-                        About
-                    </div>
+                <div className="relative">
+                    <div
+                        className="pointer-events-none absolute -left-4 top-0 hidden lg:block h-full w-px bg-gradient-to-b from-transparent via-white/10 to-transparent"/>
+                    <div
+                        className="pointer-events-none absolute -left-4 top-7 hidden lg:block h-10 w-10 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(0,89,89,0.35),transparent_60%)] blur-[2px]"/>
+                    <div className="space-y-10">
+                        <section className="space-y-5">
+                            <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                About
+                            </div>
 
-                    <p className="text-[clamp(18px,2.4vw,22px)] leading-relaxed text-white/90">
-                        I’m Ani — a frontend engineer driven by curiosity, structure, and a need to understand how
-                        things really work.
-                        My path into development wasn’t linear, but it was intentional. I grew into this field by
-                        exploring, questioning,
-                        and constantly rebuilding my understanding of both code and design.
-                    </p>
+                            <p className="text-[clamp(18px,2.4vw,22px)] leading-relaxed text-white/90">
+                                I’m Ani — a frontend engineer driven by curiosity, structure, and a need to understand
+                                how
+                                things really work.
+                                My path into development wasn’t linear, but it was intentional. I grew into this field
+                                by
+                                exploring, questioning,
+                                and constantly rebuilding my understanding of both code and design.
+                            </p>
 
-                    <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
-                        Over the years, I moved from experimenting and learning independently to working on large,
-                        real-world systems.
-                        I’ve seen how small technical decisions scale, how interfaces affect people, and how clarity in
-                        code directly
-                        impacts long-term product health.
-                    </p>
+                            <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
+                                Over the years, I moved from experimenting and learning independently to working on
+                                large,
+                                real-world systems.
+                                I’ve seen how small technical decisions scale, how interfaces affect people, and how
+                                clarity in
+                                code directly
+                                impacts long-term product health.
+                            </p>
 
-                </section>
+                        </section>
 
-                <section className="space-y-5">
-                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
-                        Experience
-                    </div>
+                        <section className="space-y-5">
+                            <div className="flex items-center gap-3">
+                                <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                    Experience
+                                </div>
+                                <div className="h-px flex-1 bg-gradient-to-r from-white/12 via-white/6 to-transparent" />
+                                <div className="h-1.5 w-1.5 rounded-full bg-[#005959]/70 shadow-[0_0_18px_rgba(0,89,89,0.55)]" />
+                            </div>
 
-                    <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
-                        I’ve worked on complex admin platforms, healthcare products, and long-living applications where
-                        stability,
-                        performance, and maintainability matter. I’ve migrated large Angular systems to React, designed
-                        component
-                        architectures, and worked close to both product and engineering decisions.
-                    </p>
+                            <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
+                                I’ve worked on complex admin platforms, healthcare products, and long-living
+                                applications where
+                                stability,
+                                performance, and maintainability matter. I’ve migrated large Angular systems to React,
+                                designed
+                                component
+                                architectures, and worked close to both product and engineering decisions.
+                            </p>
 
-                    <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
-                        What shaped me most wasn’t just the technology — it was learning how systems evolve, how teams
-                        work,
-                        and how thoughtful structure makes future work easier instead of harder.
-                    </p>
+                            <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
+                                What shaped me most wasn’t just the technology — it was learning how systems evolve, how
+                                teams
+                                work,
+                                and how thoughtful structure makes future work easier instead of harder.
+                            </p>
 
-                </section>
+                        </section>
 
-                <section className="space-y-5">
-                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
-                        Skills
-                    </div>
+                        <section className="space-y-5">
+                            <div className="flex items-center gap-3">
+                                <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                    Skills
+                                </div>
+                                <div className="h-px flex-1 bg-gradient-to-r from-white/12 via-white/6 to-transparent" />
+                                <div className="h-1.5 w-1.5 rounded-full bg-[#005959]/70 shadow-[0_0_18px_rgba(0,89,89,0.55)]" />
+                            </div>
 
-                    <div className="flex flex-wrap gap-2">
-                        {[
-                            "React",
-                            "TypeScript",
-                            "Framer Motion",
-                            "Three.js",
-                            "UI Engineering",
-                            "Tailwind",
-                            "Design Systems",
-                            "Accessibility",
-                            "Performance"
-                        ].map((s) => (
-                            <span
-                                key={s}
-                                className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[12px] text-white/70"
-                            >
+                            <div className="flex flex-wrap gap-2">
+                                {[
+                                    "React",
+                                    "TypeScript",
+                                    "Framer Motion",
+                                    "Three.js",
+                                    "UI Engineering",
+                                    "Tailwind",
+                                    "Design Systems",
+                                    "Accessibility",
+                                    "Performance"
+                                ].map((s) => (
+                                    <span
+                                        key={s}
+                                        className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[12px] text-white/70"
+                                    >
                                 {s}
                             </span>
-                        ))}
+                                ))}
+                            </div>
+                            <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
+                                I focus on tools and patterns that support long-term clarity, not trends.
+                                My strength lies in building interfaces that are predictable, expressive,
+                                and resilient over time.
+                            </p>
+
+                        </section>
+
+                        <section className="space-y-5">
+                            <div className="flex items-center gap-3">
+                                <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                    Outside work
+                                </div>
+                                <div className="h-px flex-1 bg-gradient-to-r from-white/12 via-white/6 to-transparent" />
+                                <div className="h-1.5 w-1.5 rounded-full bg-[#005959]/70 shadow-[0_0_18px_rgba(0,89,89,0.55)]" />
+                            </div>
+
+                            <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
+                                Music has been part of my life for as long as I can remember. Being a violinist shaped
+                                how I perceive rhythm,
+                                discipline, and progression — and those same principles naturally transferred into how I
+                                think about interfaces,
+                                motion, and pacing in digital products.
+                            </p>
+
+                            <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
+                                I approach development the same way I approach music: with patience, attention to
+                                detail,
+                                and respect for the structure beneath what people see on the surface.
+                            </p>
+
+                        </section>
                     </div>
-                    <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
-                        I focus on tools and patterns that support long-term clarity, not trends.
-                        My strength lies in building interfaces that are predictable, expressive,
-                        and resilient over time.
-                    </p>
-
-                </section>
-
-                <section className="space-y-5">
-                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
-                        Outside work
-                    </div>
-
-                    <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
-                        Music has been part of my life for as long as I can remember. Being a violinist shaped how I perceive rhythm,
-                        discipline, and progression — and those same principles naturally transferred into how I think about interfaces,
-                        motion, and pacing in digital products.
-                    </p>
-
-                    <p className="text-[15px] sm:text-[16px] leading-relaxed text-white/65">
-                        I approach development the same way I approach music: with patience, attention to detail,
-                        and respect for the structure beneath what people see on the surface.
-                    </p>
-
-                </section>
+                </div>
             </motion.div>
 
             <motion.div
