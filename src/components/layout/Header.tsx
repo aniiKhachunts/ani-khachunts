@@ -1,20 +1,20 @@
-import { AnimatePresence, motion } from "framer-motion"
-import { useLocation, useNavigate } from "react-router-dom"
+import {AnimatePresence, motion} from "framer-motion"
+import {useLocation, useNavigate} from "react-router-dom"
 
 export default function Header() {
     const location = useLocation()
     const navigate = useNavigate()
-
-    const shouldShow = location.pathname === "/about" || location.pathname === "/projects"
+    const shouldShow = location.pathname === "/about" ||
+        location.pathname.startsWith("/projects");
 
     return (
         <AnimatePresence>
             {shouldShow && (
                 <motion.header
-                    initial={{ opacity: 0, y: -14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -14 }}
-                    transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                    initial={{opacity: 0, y: -14}}
+                    animate={{opacity: 1, y: 0}}
+                    exit={{opacity: 0, y: -14}}
+                    transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
                     className="fixed top-4 left-0 right-0 z-[999] px-4 pointer-events-none"
                 >
                     <div className="mx-auto max-w-6xl">
@@ -50,7 +50,7 @@ export default function Header() {
                                 Ani Khachunts
                             </span>
 
-                            <div className="w-24" />
+                            <div className="w-24"/>
                         </div>
                     </div>
                 </motion.header>

@@ -1,26 +1,27 @@
-import { AnimatePresence } from "framer-motion"
-import { Route, Routes, useLocation } from "react-router-dom"
-import { PageTransition } from "./components/transitions/PageTransition"
+import {AnimatePresence} from "framer-motion"
+import {Navigate, Route, Routes, useLocation} from "react-router-dom"
+import {PageTransition} from "./components/transitions/PageTransition"
 import Home from "./pages/Home/Home"
 import About from "./pages/About/About"
 import Projects from "./pages/Projects/Projects"
 import Header from "./components/layout/Header"
 import CosmicCursor from "./components/CosmicCursor"
+import ProjectPage from "./pages/Projects/ProjectPage.tsx";
 
 function AnimatedRoutes() {
     const location = useLocation()
 
     return (
         <>
-            <Header />
-            <CosmicCursor />
+            <Header/>
+            <CosmicCursor/>
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
                     <Route
                         path="/"
                         element={
                             <PageTransition>
-                                <Home />
+                                <Home/>
                             </PageTransition>
                         }
                     />
@@ -28,7 +29,7 @@ function AnimatedRoutes() {
                         path="/about"
                         element={
                             <PageTransition>
-                                <About />
+                                <About/>
                             </PageTransition>
                         }
                     />
@@ -36,10 +37,12 @@ function AnimatedRoutes() {
                         path="/projects"
                         element={
                             <PageTransition>
-                                <Projects />
+                                <Projects/>
                             </PageTransition>
                         }
                     />
+                    <Route path="/projects/:slug" element={<ProjectPage/>}/>
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </AnimatePresence>
         </>
@@ -47,5 +50,5 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
-    return <AnimatedRoutes />
+    return <AnimatedRoutes/>
 }
