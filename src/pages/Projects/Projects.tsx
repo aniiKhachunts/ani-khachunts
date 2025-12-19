@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { Link } from "react-router-dom"
-import { projects as projectsData, type ProjectTheme } from "../../data/projects"
+import {useMemo, useState} from "react"
+import {AnimatePresence, motion} from "framer-motion"
+import {Link} from "react-router-dom"
+import {projects as projectsData, type ProjectTheme} from "../../data/projects"
 
 function resolveTheme(t?: ProjectTheme | null): ProjectTheme {
     if (t) return t
@@ -56,7 +56,7 @@ radial-gradient(1000px circle at 82% 70%, ${t.glow2}, transparent 66%),
 linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.55))`
 }
 
-function previewFxA(t: ProjectTheme) {
+function previewFxA() {
     return `radial-gradient(850px circle at 30% 35%, rgba(255,255,255,0.06), transparent 62%),
 radial-gradient(850px circle at 70% 72%, rgba(255,255,255,0.04), transparent 65%)`
 }
@@ -92,7 +92,7 @@ export default function Projects() {
                             </div>
                         </div>
 
-                        <div className="mt-6 h-px w-full bg-white/10" />
+                        <div className="mt-6 h-px w-full bg-white/10"/>
 
                         <div className="mt-6 space-y-2" onMouseLeave={() => setActiveIdx(null)}>
                             {projects.map((p, idx) => {
@@ -132,7 +132,8 @@ export default function Projects() {
                                                     : undefined
                                             }
                                         >
-                                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div
+                                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                                 <div
                                                     className="absolute inset-0"
                                                     style={{
@@ -156,7 +157,8 @@ export default function Projects() {
                                                 />
                                             </div>
 
-                                            <div className="relative flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
+                                            <div
+                                                className="relative flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
                                                 <div className="flex items-start gap-4">
                                                     <div className="w-10 pt-1 text-[12px] text-white/45 tabular-nums">
                                                         {String(idx + 1).padStart(2, "0")}
@@ -164,15 +166,18 @@ export default function Projects() {
 
                                                     <div className="min-w-0">
                                                         <div className="flex items-baseline gap-3">
-                                                            <div className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
+                                                            <div
+                                                                className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
                                                                 {p.title}
                                                             </div>
-                                                            <div className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/40">
+                                                            <div
+                                                                className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/40">
                                                                 {p.year}
                                                             </div>
                                                         </div>
 
-                                                        <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
+                                                        <div
+                                                            className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
 
                                                         <div className="mt-2 flex items-center gap-3">
                                                             <div
@@ -198,18 +203,19 @@ export default function Projects() {
                                                     aria-hidden="true"
                                                     className="flex items-center gap-3"
                                                     initial={false}
-                                                    animate={{ opacity: isActive ? 1 : 0.55 }}
-                                                    transition={{ duration: 0.25 }}
+                                                    animate={{opacity: isActive ? 1 : 0.55}}
+                                                    transition={{duration: 0.25}}
                                                 >
-                                                    <div className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/45">
+                                                    <div
+                                                        className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/45">
                                                         Open
                                                     </div>
 
                                                     <motion.div
                                                         className="text-white/85"
                                                         initial={false}
-                                                        animate={{ x: isActive ? 3 : 0 }}
-                                                        transition={{ duration: 0.25 }}
+                                                        animate={{x: isActive ? 3 : 0}}
+                                                        transition={{duration: 0.25}}
                                                     >
                                                         →
                                                     </motion.div>
@@ -235,28 +241,29 @@ export default function Projects() {
                                 {active ? (
                                     <motion.div
                                         key={active.slug}
-                                        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-                                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                                        exit={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-                                        transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                                        initial={{opacity: 0, y: 10, filter: "blur(10px)"}}
+                                        animate={{opacity: 1, y: 0, filter: "blur(0px)"}}
+                                        exit={{opacity: 0, y: 10, filter: "blur(10px)"}}
+                                        transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
                                         className="rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden"
                                     >
                                         <div className="relative aspect-[4/5] w-full">
-                                            <div className="absolute inset-0" style={{ backgroundImage: previewBg(theme) }} />
+                                            <div className="absolute inset-0"
+                                                 style={{backgroundImage: previewBg(theme)}}/>
 
                                             <motion.div
                                                 className="absolute inset-0 opacity-[0.9]"
-                                                style={{ backgroundImage: previewFxA(theme) }}
-                                                initial={{ opacity: 0.0 }}
-                                                animate={{ opacity: 0.9 }}
-                                                transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                                                style={{backgroundImage: previewFxA()}}
+                                                initial={{opacity: 0.0}}
+                                                animate={{opacity: 0.9}}
+                                                transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
                                             />
 
                                             <motion.div
                                                 className="absolute -inset-10 opacity-[0.45]"
-                                                style={{ backgroundImage: previewFxB(theme) }}
-                                                animate={{ x: [0, 10, -6, 0], y: [0, -8, 6, 0] }}
-                                                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                                                style={{backgroundImage: previewFxB(theme)}}
+                                                animate={{x: [0, 10, -6, 0], y: [0, -8, 6, 0]}}
+                                                transition={{duration: 8, repeat: Infinity, ease: "easeInOut"}}
                                             />
 
                                             <div
@@ -272,30 +279,35 @@ export default function Projects() {
                                                 src={active.cover}
                                                 alt={active.title}
                                                 className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
-                                                initial={{ opacity: 0, scale: 1.02 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 1.01 }}
-                                                transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                                                initial={{opacity: 0, scale: 1.02}}
+                                                animate={{opacity: 1, scale: 1}}
+                                                exit={{opacity: 0, scale: 1.01}}
+                                                transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
                                                 draggable={false}
                                             />
 
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent" />
-                                            <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
+                                            <div
+                                                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent"/>
+                                            <div
+                                                className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
 
                                             <div className="absolute left-5 top-5 right-5">
                                                 <div className="flex items-center justify-between">
-                                                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/60">
+                                                    <div
+                                                        className="text-[11px] uppercase tracking-[0.28em] text-white/60">
                                                         {themeLabel(theme)}
                                                     </div>
-                                                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                                    <div
+                                                        className="text-[11px] uppercase tracking-[0.28em] text-white/55">
                                                         {active.year}
                                                     </div>
                                                 </div>
 
-                                                <div className="mt-3 h-px w-full bg-white/10" />
+                                                <div className="mt-3 h-px w-full bg-white/10"/>
 
                                                 <div className="mt-3">
-                                                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[11px] uppercase tracking-[0.26em] text-white/70">
+                                                    <div
+                                                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[11px] uppercase tracking-[0.26em] text-white/70">
                                                         <span
                                                             className="h-2 w-2 rounded-full"
                                                             style={{
@@ -309,7 +321,8 @@ export default function Projects() {
                                             </div>
 
                                             <div className="absolute left-5 right-5 bottom-5">
-                                                <div className="text-[clamp(18px,2.3vw,22px)] text-white/92">{active.title}</div>
+                                                <div
+                                                    className="text-[clamp(18px,2.3vw,22px)] text-white/92">{active.title}</div>
 
                                                 <div className="mt-2 text-[13px] leading-relaxed text-white/62">
                                                     {themeTone(theme)}
@@ -323,7 +336,8 @@ export default function Projects() {
                                                                 "linear-gradient(90deg, var(--p-accent), transparent)"
                                                         }}
                                                     />
-                                                    <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                                    <div
+                                                        className="text-[11px] uppercase tracking-[0.28em] text-white/55">
                                                         Open full story →
                                                     </div>
                                                 </div>
@@ -336,8 +350,10 @@ export default function Projects() {
                                             </div>
 
                                             <div className="mt-3 space-y-3">
-                                                <div className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
-                                                    <div className="text-[11px] uppercase tracking-[0.26em] text-white/50">
+                                                <div
+                                                    className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+                                                    <div
+                                                        className="text-[11px] uppercase tracking-[0.26em] text-white/50">
                                                         Concept
                                                     </div>
                                                     <div className="mt-1 text-[13px] leading-relaxed text-white/70">
@@ -345,12 +361,15 @@ export default function Projects() {
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
-                                                    <div className="text-[11px] uppercase tracking-[0.26em] text-white/50">
+                                                <div
+                                                    className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+                                                    <div
+                                                        className="text-[11px] uppercase tracking-[0.26em] text-white/50">
                                                         Build notes
                                                     </div>
                                                     <div className="mt-1 text-[13px] leading-relaxed text-white/70">
-                                                        Role: {active.details.role}. Stack: {active.details.stack}. Timeline: {active.details.timeline}.
+                                                        Role: {active.details.role}. Stack: {active.details.stack}.
+                                                        Timeline: {active.details.timeline}.
                                                     </div>
                                                 </div>
                                             </div>
@@ -376,18 +395,7 @@ export default function Projects() {
                                             </div>
                                         </div>
                                     </motion.div>
-                                ) : (
-                                    <motion.div
-                                        key="empty"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
-                                        className="h-[520px] lg:h-[680px]"
-                                    >
-                                        <div className="h-full rounded-2xl border border-white/10 bg-white/[0.02]" />
-                                    </motion.div>
-                                )}
+                                ) : null}
                             </AnimatePresence>
                         </div>
                     </div>
