@@ -258,7 +258,7 @@ export default function Projects() {
                                         <div className="mt-3 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden">
                                             <div className="relative aspect-[4/5] w-full">
                                                 <img
-                                                    src={p.cover}
+                                                    src={p.hero}
                                                     alt={p.title}
                                                     className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
                                                     draggable={false}
@@ -348,7 +348,7 @@ export default function Projects() {
 
                                                 <motion.img
                                                     key={active.hero}
-                                                    src={active.hero ?? active.cover}
+                                                    src={active.hero}
                                                     alt={active.title}
                                                     className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
                                                     initial={{opacity: 0, scale: 1.02}}
