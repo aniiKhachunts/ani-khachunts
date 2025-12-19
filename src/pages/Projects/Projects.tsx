@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { Link } from "react-router-dom"
-import { projects as projectsData, type ProjectTheme } from "../../data/projects"
+import {useEffect, useMemo, useState} from "react"
+import {AnimatePresence, motion} from "framer-motion"
+import {Link} from "react-router-dom"
+import {projects as projectsData, type ProjectTheme} from "../../data/projects"
 
 function resolveTheme(t?: ProjectTheme | null): ProjectTheme {
     if (t) return t
@@ -166,8 +166,10 @@ export default function Projects() {
                                                     : undefined
                                             }
                                         >
-                                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                <div className="absolute inset-0" style={{ backgroundImage: hoverBg(t) }} />
+                                            <div
+                                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <div className="absolute inset-0"
+                                                     style={{backgroundImage: hoverBg(t)}}/>
                                                 <div
                                                     className="absolute inset-0"
                                                     style={{
@@ -185,7 +187,8 @@ export default function Projects() {
                                                 />
                                             </div>
 
-                                            <div className="relative flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
+                                            <div
+                                                className="relative flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
                                                 <div className="flex items-start gap-4">
                                                     <div className="w-10 pt-1 text-[12px] text-white/45 tabular-nums">
                                                         {String(idx + 1).padStart(2, "0")}
@@ -193,15 +196,18 @@ export default function Projects() {
 
                                                     <div className="min-w-0">
                                                         <div className="flex items-baseline gap-3">
-                                                            <div className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
+                                                            <div
+                                                                className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
                                                                 {p.title}
                                                             </div>
-                                                            <div className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/40">
+                                                            <div
+                                                                className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/40">
                                                                 {p.year}
                                                             </div>
                                                         </div>
 
-                                                        <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
+                                                        <div
+                                                            className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
 
                                                         <div className="mt-2 flex items-center gap-3">
                                                             <div
@@ -228,17 +234,18 @@ export default function Projects() {
                                                     aria-hidden="true"
                                                     className="flex items-center gap-3"
                                                     initial={false}
-                                                    animate={{ opacity: isActive ? 1 : 0.55 }}
-                                                    transition={{ duration: 0.25 }}
+                                                    animate={{opacity: isActive ? 1 : 0.55}}
+                                                    transition={{duration: 0.25}}
                                                 >
-                                                    <div className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/45">
+                                                    <div
+                                                        className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/45">
                                                         Open
                                                     </div>
                                                     <motion.div
                                                         className="text-white/85"
                                                         initial={false}
-                                                        animate={{ x: isActive ? 3 : 0 }}
-                                                        transition={{ duration: 0.25 }}
+                                                        animate={{x: isActive ? 3 : 0}}
+                                                        transition={{duration: 0.25}}
                                                     >
                                                         →
                                                     </motion.div>
@@ -254,51 +261,53 @@ export default function Projects() {
                                         </div>
                                     </Link>
 
-                                    {mobilePreviewMode && isActive ? (
-                                        <div className="mt-3 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden">
-                                            <div className="relative aspect-[4/5] w-full">
-                                                <img
-                                                    src={p.hero}
-                                                    alt={p.title}
-                                                    className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
-                                                    draggable={false}
-                                                />
-                                                <div
-                                                    className="absolute inset-0"
-                                                    style={{
-                                                        backgroundImage:
-                                                            "radial-gradient(900px circle at 20% 25%, var(--g1), transparent 55%), radial-gradient(900px circle at 80% 70%, var(--g2), transparent 60%)"
-                                                    }}
-                                                />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent" />
-                                                <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
-                                            </div>
+                                    {mobilePreviewMode && isActive ? (<Link
+                                            to={`/projects/${p.slug}`}
+                                            className="text-[12px] uppercase tracking-[0.22em] text-white/80 hover:text-white transition-colors"
+                                        >
+                                            <div
+                                                className="mt-3 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden">
+                                                <div className="relative aspect-[4/5] w-full">
+                                                    <img
+                                                        src={p.hero}
+                                                        alt={p.title}
+                                                        className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+                                                        draggable={false}
+                                                    />
+                                                    <div
+                                                        className="absolute inset-0"
+                                                        style={{
+                                                            backgroundImage:
+                                                                "radial-gradient(900px circle at 20% 25%, var(--g1), transparent 55%), radial-gradient(900px circle at 80% 70%, var(--g2), transparent 60%)"
+                                                        }}
+                                                    />
+                                                    <div
+                                                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent"/>
+                                                    <div
+                                                        className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
+                                                </div>
 
-                                            <div className="px-5 py-4">
-                                                <div className="text-[14px] text-white/85">{p.title}</div>
-                                                <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
+                                                <div className="px-5 py-4">
+                                                    <div className="text-[14px] text-white/85">{p.title}</div>
+                                                    <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
 
-                                                <div className="mt-3 flex items-center justify-between">
-                                                    <Link
-                                                        to={`/projects/${p.slug}`}
-                                                        className="text-[12px] uppercase tracking-[0.22em] text-white/80 hover:text-white transition-colors"
-                                                    >
+                                                    <div className="mt-3 flex items-center justify-between">
                                                         Open project →
-                                                    </Link>
 
-                                                    {p.live ? (
-                                                        <a
-                                                            href={p.live}
-                                                            target="_blank"
-                                                            rel="noreferrer"
-                                                            className="text-[12px] uppercase tracking-[0.22em] text-white/60 hover:text-white transition-colors"
-                                                        >
-                                                            Live →
-                                                        </a>
-                                                    ) : null}
+                                                        {p.live ? (
+                                                            <a
+                                                                href={p.live}
+                                                                target="_blank"
+                                                                rel="noreferrer"
+                                                                className="text-[12px] uppercase tracking-[0.22em] text-white/60 hover:text-white transition-colors"
+                                                            >
+                                                                Live →
+                                                            </a>
+                                                        ) : null}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     ) : null}
                                 </div>
                             )
