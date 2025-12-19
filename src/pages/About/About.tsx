@@ -8,7 +8,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.55),rgba(0,0,0,0.25))]" />
             </div>
 
-            <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-20 pt-32 pb-32 text-white">
+            <div className="relative z-10 mx-auto max-w-6xl px-6 sm:px-10 lg:px-20 pt-10 sm:pt-16 lg:pt-32 pb-24 sm:pb-28 lg:pb-32 text-white">
                 <AboutContent />
             </div>
         </section>

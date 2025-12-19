@@ -7,7 +7,7 @@ export default function AboutContent() {
                 initial={{opacity: 0, y: 24}}
                 animate={{opacity: 1, y: 0}}
                 transition={{duration: 0.7, ease: [0.2, 0.8, 0.2, 1]}}
-                className="lg:col-span-6 space-y-10 relative z-10"
+                className="lg:col-span-6 space-y-10 relative z-10 order-2 lg:order-1"
             >
                 <section className="space-y-5">
                     <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
@@ -109,13 +109,13 @@ export default function AboutContent() {
                 initial={{opacity: 0, scale: 0.96}}
                 animate={{opacity: 1, scale: 1}}
                 transition={{duration: 0.8, ease: [0.2, 0.8, 0.2, 1]}}
-                className="lg:col-span-6 flex flex-col gap-10 lg:sticky lg:top-28 relative z-10"
+                className="lg:col-span-6 flex flex-col gap-10 relative z-10 order-1 lg:order-2 lg:sticky lg:top-28"
             >
                 <div
                     className="relative w-full max-w-[520px] mx-auto lg:ml-auto overflow-hidden rounded-2xl border border-white/10 bg-white/5">
                     <div className="relative w-full aspect-[4/5]">
                         <img
-                            src="/public/about.JPG"
+                            src="/about.JPG"
                             alt="Ani Khachunts"
                             className="absolute inset-0 h-full w-full object-cover object-[50%_20%]"
                             draggable={false}
