@@ -1,4 +1,4 @@
-import {useMemo, useState} from "react"
+import {useMemo, useState, useEffect} from "react"
 import {AnimatePresence, motion} from "framer-motion"
 import {Link} from "react-router-dom"
 import {projects as projectsData, type ProjectTheme} from "../../data/projects"
@@ -78,6 +78,21 @@ export default function Projects() {
         ["--p-accent2" as any]: theme.accent2
     } as any
 
+    const isTouch = useIsTouch()
+
+    function useIsTouch() {
+        const [isTouch, setIsTouch] = useState(false)
+
+        useEffect(() => {
+            setIsTouch(
+                window.matchMedia("(hover: none)").matches ||
+                "ontouchstart" in window
+            )
+        }, [])
+
+        return isTouch
+    }
+
     return (
         <section className="relative min-h-screen w-full" style={pageVars}>
             <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-20 pt-28 pb-24">
@@ -108,9 +123,16 @@ export default function Projects() {
 
                                 return (
                                     <Link
-                                        key={p.slug}
-                                        to={`/projects/${p.slug}`}
-                                        onMouseEnter={() => setActiveIdx(idx)}
+                                        to={isTouch && activeIdx !== idx ? "#" : `/projects/${p.slug}`}
+                                        onClick={(e) => {
+                                            if (isTouch && activeIdx !== idx) {
+                                                e.preventDefault()
+                                                setActiveIdx(idx)
+                                            }
+                                        }}
+                                        onMouseEnter={() => {
+                                            if (!isTouch) setActiveIdx(idx)
+                                        }}
                                         onFocus={() => setActiveIdx(idx)}
                                         className="group block"
                                         style={itemVars}

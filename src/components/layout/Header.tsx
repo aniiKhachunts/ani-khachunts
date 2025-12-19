@@ -22,7 +22,7 @@ export default function Header() {
                             className="
                                 pointer-events-auto
                                 relative
-                                flex items-center justify-between
+                                flex items-center justify-center
                                 rounded-full
                                 border border-white/15
                                 bg-black/55
@@ -32,21 +32,22 @@ export default function Header() {
                                 ring-1 ring-white/5
                             "
                         >
-                            <div className="w-24">
-                                <button
-                                    onClick={() => navigate("/")}
-                                    className="
-                                        inline-flex items-center
-                                        text-[11px] uppercase tracking-[0.26em]
-                                        text-white/75 hover:text-white
-                                        transition
-                                    "
-                                >
-                                    Home
-                                </button>
-                            </div>
+                            {/*<div className="w-24">*/}
+                            {/*    <button*/}
+                            {/*        onClick={() => navigate("/")}*/}
+                            {/*        className="*/}
+                            {/*            inline-flex items-center*/}
+                            {/*            text-[11px] uppercase tracking-[0.26em]*/}
+                            {/*            text-white/75 hover:text-white*/}
+                            {/*            transition*/}
+                            {/*        "*/}
+                            {/*    >*/}
+                            {/*        Home*/}
+                            {/*    </button>*/}
+                            {/*</div>*/}
 
-                            <span className="handwritten text-base sm:text-lg leading-none text-white/95">
+                            <span className="handwritten text-base sm:text-lg leading-none text-white/95"
+                                  onClick={() => navigate("/")}>
                                 Ani Khachunts
                             </span>
 
