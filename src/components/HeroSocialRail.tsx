@@ -55,7 +55,7 @@ export default function HeroSocialRail() {
             <div
                 className="absolute left-1/2 -translate-x-1/2 lg:hidden"
                 style={{
-                    bottom: "calc(env(safe-area-inset-bottom) + 8px + var(--vv-bottom))"
+                    bottom: "calc(env(safe-area-inset-bottom) + 10px + var(--vv-bottom))"
                 }}
             >
                 <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-2 py-1.5 backdrop-blur-sm">
@@ -68,15 +68,7 @@ export default function HeroSocialRail() {
                             aria-label={it.label}
                             title={it.label}
                             style={{ ["--brand" as any]: it.color }}
-                            className="
-                            rounded-full
-                            p-1.5
-                            text-white/85
-                            bg-black/20
-                            transition-all duration-300
-                            hover:text-[var(--brand)]
-                            hover:bg-black/35
-                        "
+                            className="rounded-full p-1.5 text-white/85 bg-black/20 transition-all duration-300 hover:text-[var(--brand)] hover:bg-black/35"
                         >
                             {it.svg}
                         </a>
@@ -85,7 +77,7 @@ export default function HeroSocialRail() {
             </div>
 
             <div className="hidden lg:block absolute right-8 bottom-8">
-                <div className="pointer-events-auto flex flex-col gap-4 bg-transparent">
+                <div className="pointer-events-auto flex flex-col gap-4">
                     {items.map((it, idx) => (
                         <div key={it.label} className="flex flex-col items-center">
                             <a
@@ -95,27 +87,16 @@ export default function HeroSocialRail() {
                                 aria-label={it.label}
                                 title={it.label}
                                 style={{ ["--brand" as any]: it.color }}
-                                className="
-                                rounded-full
-                                p-1.5
-                                text-white/85
-                                bg-black/20
-                                transition-all duration-300
-                                hover:text-[var(--brand)]
-                                hover:bg-black/35
-                            "
+                                className="rounded-full p-1.5 text-white/85 bg-black/20 transition-all duration-300 hover:text-[var(--brand)] hover:bg-black/35"
                             >
                                 {it.svg}
                             </a>
 
-                            {idx !== items.length - 1 ? (
-                                <div className="mt-2 h-px w-4 bg-white/30" />
-                            ) : null}
+                            {idx !== items.length - 1 ? <div className="mt-2 h-px w-4 bg-white/30" /> : null}
                         </div>
                     ))}
                 </div>
             </div>
         </div>
     )
-
 }

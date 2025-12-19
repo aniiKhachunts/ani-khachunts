@@ -1,34 +1,35 @@
 import { useEffect } from "react"
 
-export default function useVisualViewportBottom(varName = "--vv-bottom") {
+export default function useVisualViewportBottom() {
     useEffect(() => {
         const vv = window.visualViewport
 
-        const set = () => {
+        const update = () => {
             if (!vv) {
-                document.documentElement.style.setProperty(varName, "0px")
+                document.documentElement.style.setProperty("--vv-bottom", "0px")
                 return
             }
             const bottom = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop))
-            document.documentElement.style.setProperty(varName, `${bottom}px`)
+            document.documentElement.style.setProperty("--vv-bottom", `${bottom}px`)
         }
 
-        set()
+        update()
 
         if (vv) {
-            vv.addEventListener("resize", set)
-            vv.addEventListener("scroll", set)
+            vv.addEventListener("resize", update)
+            vv.addEventListener("scroll", update)
         }
-        window.addEventListener("resize", set)
-        window.addEventListener("orientationchange", set)
+
+        window.addEventListener("resize", update)
+        window.addEventListener("orientationchange", update)
 
         return () => {
             if (vv) {
-                vv.removeEventListener("resize", set)
-                vv.removeEventListener("scroll", set)
+                vv.removeEventListener("resize", update)
+                vv.removeEventListener("scroll", update)
             }
-            window.removeEventListener("resize", set)
-            window.removeEventListener("orientationchange", set)
+            window.removeEventListener("resize", update)
+            window.removeEventListener("orientationchange", update)
         }
-    }, [varName])
+    }, [])
 }
