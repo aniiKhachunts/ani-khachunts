@@ -1,7 +1,7 @@
-import {useMemo, useState, useEffect} from "react"
-import {AnimatePresence, motion} from "framer-motion"
-import {Link} from "react-router-dom"
-import {projects as projectsData, type ProjectTheme} from "../../data/projects"
+import { useEffect, useMemo, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { projects as projectsData, type ProjectTheme } from "../../data/projects"
 
 function resolveTheme(t?: ProjectTheme | null): ProjectTheme {
     if (t) return t
@@ -66,32 +66,40 @@ function previewFxB(t: ProjectTheme) {
 radial-gradient(900px circle at 70% 65%, ${t.glow2}, transparent 72%)`
 }
 
+function useMobilePreviewMode() {
+    const [enabled, setEnabled] = useState(false)
+
+    useEffect(() => {
+        const mqTouch = window.matchMedia("(hover: none), (pointer: coarse)")
+        const mqSmall = window.matchMedia("(max-width: 1024px)")
+
+        const update = () => setEnabled(mqTouch.matches || mqSmall.matches)
+
+        update()
+        mqTouch.addEventListener("change", update)
+        mqSmall.addEventListener("change", update)
+
+        return () => {
+            mqTouch.removeEventListener("change", update)
+            mqSmall.removeEventListener("change", update)
+        }
+    }, [])
+
+    return enabled
+}
+
 export default function Projects() {
     const projects = useMemo(() => projectsData, [])
     const [activeIdx, setActiveIdx] = useState<number | null>(null)
 
     const active = activeIdx !== null ? projects[activeIdx] : null
     const theme = resolveTheme(active?.theme ?? null)
+    const mobilePreviewMode = useMobilePreviewMode()
 
     const pageVars = {
         ["--p-accent" as any]: theme.accent,
         ["--p-accent2" as any]: theme.accent2
     } as any
-
-    const isTouch = useIsTouch()
-
-    function useIsTouch() {
-        const [isTouch, setIsTouch] = useState(false)
-
-        useEffect(() => {
-            setIsTouch(
-                window.matchMedia("(hover: none)").matches ||
-                "ontouchstart" in window
-            )
-        }, [])
-
-        return isTouch
-    }
 
     return (
         <section className="relative min-h-screen w-full" style={pageVars}>
@@ -109,33 +117,37 @@ export default function Projects() {
 
                         <div className="mt-6 h-px w-full bg-white/10"/>
 
-                        <div className="mt-6 space-y-2" onMouseLeave={() => setActiveIdx(null)}>
-                            {projects.map((p, idx) => {
-                                const isActive = idx === activeIdx
-                                const t = resolveTheme(p.theme ?? null)
+                        <div
+                            className="mt-6 space-y-2"
+                            onMouseLeave={() => {
+                                if (!mobilePreviewMode) setActiveIdx(null)
+                            }}
+                        >                            {projects.map((p, idx) => {
+                            const isActive = idx === activeIdx
+                            const t = resolveTheme(p.theme ?? null)
 
-                                const itemVars = {
-                                    ["--c1" as any]: t.accent,
-                                    ["--c2" as any]: t.accent2,
-                                    ["--g1" as any]: t.glow1,
-                                    ["--g2" as any]: t.glow2
-                                } as any
+                            const itemVars = {
+                                ["--c1" as any]: t.accent,
+                                ["--c2" as any]: t.accent2,
+                                ["--g1" as any]: t.glow1,
+                                ["--g2" as any]: t.glow2
+                            } as any
 
-                                return (
+                            return (
+                                <div key={p.slug} style={itemVars}>
                                     <Link
-                                        to={isTouch && activeIdx !== idx ? "#" : `/projects/${p.slug}`}
+                                        to={mobilePreviewMode && activeIdx !== idx ? "#" : `/projects/${p.slug}`}
                                         onClick={(e) => {
-                                            if (isTouch && activeIdx !== idx) {
+                                            if (mobilePreviewMode && activeIdx !== idx) {
                                                 e.preventDefault()
                                                 setActiveIdx(idx)
                                             }
                                         }}
                                         onMouseEnter={() => {
-                                            if (!isTouch) setActiveIdx(idx)
+                                            if (!mobilePreviewMode) setActiveIdx(idx)
                                         }}
                                         onFocus={() => setActiveIdx(idx)}
                                         className="group block"
-                                        style={itemVars}
                                     >
                                         <div
                                             className={[
@@ -154,14 +166,8 @@ export default function Projects() {
                                                     : undefined
                                             }
                                         >
-                                            <div
-                                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                <div
-                                                    className="absolute inset-0"
-                                                    style={{
-                                                        backgroundImage: hoverBg(t)
-                                                    }}
-                                                />
+                                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <div className="absolute inset-0" style={{ backgroundImage: hoverBg(t) }} />
                                                 <div
                                                     className="absolute inset-0"
                                                     style={{
@@ -179,8 +185,7 @@ export default function Projects() {
                                                 />
                                             </div>
 
-                                            <div
-                                                className="relative flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
+                                            <div className="relative flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5">
                                                 <div className="flex items-start gap-4">
                                                     <div className="w-10 pt-1 text-[12px] text-white/45 tabular-nums">
                                                         {String(idx + 1).padStart(2, "0")}
@@ -188,31 +193,29 @@ export default function Projects() {
 
                                                     <div className="min-w-0">
                                                         <div className="flex items-baseline gap-3">
-                                                            <div
-                                                                className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
+                                                            <div className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
                                                                 {p.title}
                                                             </div>
-                                                            <div
-                                                                className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/40">
+                                                            <div className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/40">
                                                                 {p.year}
                                                             </div>
                                                         </div>
 
-                                                        <div
-                                                            className="m-1 text-[13px] text-white/60">{p.subtitle}</div>
+                                                        <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
 
                                                         <div className="mt-2 flex items-center gap-3">
                                                             <div
                                                                 className="h-px w-10"
                                                                 style={{
-                                                                    background:
-                                                                        "linear-gradient(90deg, var(--c1), transparent)"
+                                                                    background: "linear-gradient(90deg, var(--c1), transparent)"
                                                                 }}
                                                             />
                                                             <div
                                                                 className="text-[11px] uppercase tracking-[0.26em]"
                                                                 style={{
-                                                                    color: isActive ? "rgba(255,255,255,0.70)" : "rgba(255,255,255,0.45)"
+                                                                    color: isActive
+                                                                        ? "rgba(255,255,255,0.70)"
+                                                                        : "rgba(255,255,255,0.45)"
                                                                 }}
                                                             >
                                                                 {themeLabel(t)}
@@ -225,19 +228,17 @@ export default function Projects() {
                                                     aria-hidden="true"
                                                     className="flex items-center gap-3"
                                                     initial={false}
-                                                    animate={{opacity: isActive ? 1 : 0.55}}
-                                                    transition={{duration: 0.25}}
+                                                    animate={{ opacity: isActive ? 1 : 0.55 }}
+                                                    transition={{ duration: 0.25 }}
                                                 >
-                                                    <div
-                                                        className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/45">
+                                                    <div className="hidden sm:block text-[12px] uppercase tracking-[0.22em] text-white/45">
                                                         Open
                                                     </div>
-
                                                     <motion.div
                                                         className="text-white/85"
                                                         initial={false}
-                                                        animate={{x: isActive ? 3 : 0}}
-                                                        transition={{duration: 0.25}}
+                                                        animate={{ x: isActive ? 3 : 0 }}
+                                                        transition={{ duration: 0.25 }}
                                                     >
                                                         →
                                                     </motion.div>
@@ -252,84 +253,133 @@ export default function Projects() {
                                             />
                                         </div>
                                     </Link>
-                                )
-                            })}
+
+                                    {mobilePreviewMode && isActive ? (
+                                        <div className="mt-3 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden">
+                                            <div className="relative aspect-[4/5] w-full">
+                                                <img
+                                                    src={p.cover}
+                                                    alt={p.title}
+                                                    className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+                                                    draggable={false}
+                                                />
+                                                <div
+                                                    className="absolute inset-0"
+                                                    style={{
+                                                        backgroundImage:
+                                                            "radial-gradient(900px circle at 20% 25%, var(--g1), transparent 55%), radial-gradient(900px circle at 80% 70%, var(--g2), transparent 60%)"
+                                                    }}
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent" />
+                                                <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
+                                            </div>
+
+                                            <div className="px-5 py-4">
+                                                <div className="text-[14px] text-white/85">{p.title}</div>
+                                                <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
+
+                                                <div className="mt-3 flex items-center justify-between">
+                                                    <Link
+                                                        to={`/projects/${p.slug}`}
+                                                        className="text-[12px] uppercase tracking-[0.22em] text-white/80 hover:text-white transition-colors"
+                                                    >
+                                                        Open project →
+                                                    </Link>
+
+                                                    {p.live ? (
+                                                        <a
+                                                            href={p.live}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            className="text-[12px] uppercase tracking-[0.22em] text-white/60 hover:text-white transition-colors"
+                                                        >
+                                                            Live →
+                                                        </a>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            )
+
+                        })}
                         </div>
                     </div>
+                    {!mobilePreviewMode ? (
+                        <div className="lg:col-span-5">
+                            <div className="lg:sticky lg:top-28">
+                                <AnimatePresence mode="wait">
+                                    {active ? (
+                                        <motion.div
+                                            key={active.slug}
+                                            initial={{opacity: 0, y: 10, filter: "blur(10px)"}}
+                                            animate={{opacity: 1, y: 0, filter: "blur(0px)"}}
+                                            exit={{opacity: 0, y: 10, filter: "blur(10px)"}}
+                                            transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
+                                            className="rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden"
+                                        >
+                                            <div className="relative aspect-[4/5] w-full">
+                                                <div className="absolute inset-0"
+                                                     style={{backgroundImage: previewBg(theme)}}/>
 
-                    <div className="lg:col-span-5">
-                        <div className="lg:sticky lg:top-28">
-                            <AnimatePresence mode="wait">
-                                {active ? (
-                                    <motion.div
-                                        key={active.slug}
-                                        initial={{opacity: 0, y: 10, filter: "blur(10px)"}}
-                                        animate={{opacity: 1, y: 0, filter: "blur(0px)"}}
-                                        exit={{opacity: 0, y: 10, filter: "blur(10px)"}}
-                                        transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
-                                        className="rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden"
-                                    >
-                                        <div className="relative aspect-[4/5] w-full">
-                                            <div className="absolute inset-0"
-                                                 style={{backgroundImage: previewBg(theme)}}/>
+                                                <motion.div
+                                                    className="absolute inset-0 opacity-[0.9]"
+                                                    style={{backgroundImage: previewFxA()}}
+                                                    initial={{opacity: 0.0}}
+                                                    animate={{opacity: 0.9}}
+                                                    transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
+                                                />
 
-                                            <motion.div
-                                                className="absolute inset-0 opacity-[0.9]"
-                                                style={{backgroundImage: previewFxA()}}
-                                                initial={{opacity: 0.0}}
-                                                animate={{opacity: 0.9}}
-                                                transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
-                                            />
+                                                <motion.div
+                                                    className="absolute -inset-10 opacity-[0.45]"
+                                                    style={{backgroundImage: previewFxB(theme)}}
+                                                    animate={{x: [0, 10, -6, 0], y: [0, -8, 6, 0]}}
+                                                    transition={{duration: 8, repeat: Infinity, ease: "easeInOut"}}
+                                                />
 
-                                            <motion.div
-                                                className="absolute -inset-10 opacity-[0.45]"
-                                                style={{backgroundImage: previewFxB(theme)}}
-                                                animate={{x: [0, 10, -6, 0], y: [0, -8, 6, 0]}}
-                                                transition={{duration: 8, repeat: Infinity, ease: "easeInOut"}}
-                                            />
+                                                <div
+                                                    className="absolute inset-0 opacity-[0.12] mix-blend-overlay"
+                                                    style={{
+                                                        backgroundImage: patternOverlay(theme),
+                                                        backgroundSize: patternSize(theme)
+                                                    }}
+                                                />
 
-                                            <div
-                                                className="absolute inset-0 opacity-[0.12] mix-blend-overlay"
-                                                style={{
-                                                    backgroundImage: patternOverlay(theme),
-                                                    backgroundSize: patternSize(theme)
-                                                }}
-                                            />
+                                                <motion.img
+                                                    key={active.hero}
+                                                    src={active.hero ?? active.cover}
+                                                    alt={active.title}
+                                                    className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+                                                    initial={{opacity: 0, scale: 1.02}}
+                                                    animate={{opacity: 1, scale: 1}}
+                                                    exit={{opacity: 0, scale: 1.01}}
+                                                    transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
+                                                    draggable={false}
+                                                />
 
-                                            <motion.img
-                                                key={active.hero}
-                                                src={active.hero}
-                                                alt={active.title}
-                                                className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
-                                                initial={{opacity: 0, scale: 1.02}}
-                                                animate={{opacity: 1, scale: 1}}
-                                                exit={{opacity: 0, scale: 1.01}}
-                                                transition={{duration: 0.35, ease: [0.2, 0.8, 0.2, 1]}}
-                                                draggable={false}
-                                            />
+                                                <div
+                                                    className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent"/>
+                                                <div
+                                                    className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
 
-                                            <div
-                                                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent"/>
-                                            <div
-                                                className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
-
-                                            <div className="absolute left-5 top-5 right-5">
-                                                <div className="flex items-center justify-between">
-                                                    <div
-                                                        className="text-[11px] uppercase tracking-[0.28em] text-white/60">
-                                                        {themeLabel(theme)}
+                                                <div className="absolute left-5 top-5 right-5">
+                                                    <div className="flex items-center justify-between">
+                                                        <div
+                                                            className="text-[11px] uppercase tracking-[0.28em] text-white/60">
+                                                            {themeLabel(theme)}
+                                                        </div>
+                                                        <div
+                                                            className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                                            {active.year}
+                                                        </div>
                                                     </div>
-                                                    <div
-                                                        className="text-[11px] uppercase tracking-[0.28em] text-white/55">
-                                                        {active.year}
-                                                    </div>
-                                                </div>
 
-                                                <div className="mt-3 h-px w-full bg-white/10"/>
+                                                    <div className="mt-3 h-px w-full bg-white/10"/>
 
-                                                <div className="mt-3">
-                                                    <div
-                                                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[11px] uppercase tracking-[0.26em] text-white/70">
+                                                    <div className="mt-3">
+                                                        <div
+                                                            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[11px] uppercase tracking-[0.26em] text-white/70">
                                                         <span
                                                             className="h-2 w-2 rounded-full"
                                                             style={{
@@ -337,35 +387,36 @@ export default function Projects() {
                                                                     "linear-gradient(180deg, var(--p-accent), var(--p-accent2))"
                                                             }}
                                                         />
-                                                        Preview
+                                                            Preview
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="absolute left-5 right-5 bottom-5">
+                                                    <div
+                                                        className="text-[clamp(18px,2.3vw,22px)] text-white/92">{active.title}</div>
+
+                                                    <div className="mt-2 text-[13px] leading-relaxed text-white/62">
+                                                        {themeTone(theme)}
+                                                    </div>
+
+                                                    <div className="mt-3 flex items-center gap-3">
+                                                        <div
+                                                            className="h-px flex-1"
+                                                            style={{
+                                                                background:
+                                                                    "linear-gradient(90deg, var(--p-accent), transparent)"
+                                                            }}
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div className="absolute left-5 right-5 bottom-5">
-                                                <div
-                                                    className="text-[clamp(18px,2.3vw,22px)] text-white/92">{active.title}</div>
-
-                                                <div className="mt-2 text-[13px] leading-relaxed text-white/62">
-                                                    {themeTone(theme)}
-                                                </div>
-
-                                                <div className="mt-3 flex items-center gap-3">
-                                                    <div
-                                                        className="h-px flex-1"
-                                                        style={{
-                                                            background:
-                                                                "linear-gradient(90deg, var(--p-accent), transparent)"
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                ) : null}
-                            </AnimatePresence>
+                                        </motion.div>
+                                    ) : null}
+                                </AnimatePresence>
+                            </div>
                         </div>
-                    </div>
+                    ) : null}
                 </div>
             </div>
         </section>
