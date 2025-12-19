@@ -261,54 +261,110 @@ export default function Projects() {
                                         </div>
                                     </Link>
 
-                                    {mobilePreviewMode && isActive ? (<Link
-                                            to={`/projects/${p.slug}`}
-                                            className="text-[12px] uppercase tracking-[0.22em] text-white/80 hover:text-white transition-colors"
-                                        >
-                                            <div
-                                                className="mt-3 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden">
+                                    {mobilePreviewMode && isActive ? (
+                                        <Link to={`/projects/${p.slug}`} className="block">
+                                            <div className="mt-3 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl overflow-hidden">
                                                 <div className="relative aspect-[4/5] w-full">
-                                                    <img
-                                                        src={p.hero}
-                                                        alt={p.title}
-                                                        className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
-                                                        draggable={false}
+                                                    <div className="absolute inset-0" style={{ backgroundImage: previewBg(t) }} />
+
+                                                    <div className="absolute inset-0 opacity-[0.9]" style={{ backgroundImage: previewFxA() }} />
+
+                                                    <motion.div
+                                                        className="absolute -inset-10 opacity-[0.45]"
+                                                        style={{ backgroundImage: previewFxB(t) }}
+                                                        animate={{ x: [0, 10, -6, 0], y: [0, -8, 6, 0] }}
+                                                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                                                     />
+
                                                     <div
-                                                        className="absolute inset-0"
+                                                        className="absolute inset-0 opacity-[0.12] mix-blend-overlay"
                                                         style={{
-                                                            backgroundImage:
-                                                                "radial-gradient(900px circle at 20% 25%, var(--g1), transparent 55%), radial-gradient(900px circle at 80% 70%, var(--g2), transparent 60%)"
+                                                            backgroundImage: patternOverlay(t),
+                                                            backgroundSize: patternSize(t)
                                                         }}
                                                     />
-                                                    <div
-                                                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent"/>
-                                                    <div
-                                                        className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
-                                                </div>
 
-                                                <div className="px-5 py-4">
-                                                    <div className="text-[14px] text-white/85">{p.title}</div>
-                                                    <div className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
+                                                    {p.hero ? (
+                                                        <motion.img
+                                                            key={p.hero}
+                                                            src={p.hero}
+                                                            alt={p.title}
+                                                            className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+                                                            initial={{ opacity: 0, scale: 1.02 }}
+                                                            animate={{ opacity: 1, scale: 1 }}
+                                                            exit={{ opacity: 0, scale: 1.01 }}
+                                                            transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+                                                            draggable={false}
+                                                        />
+                                                    ) : null}
 
-                                                    <div className="mt-3 flex items-center justify-between">
-                                                        Open project →
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-transparent" />
+                                                    <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
 
-                                                        {p.live ? (
-                                                            <a
-                                                                href={p.live}
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                                className="text-[12px] uppercase tracking-[0.22em] text-white/60 hover:text-white transition-colors"
-                                                            >
-                                                                Live →
-                                                            </a>
-                                                        ) : null}
+                                                    <div className="absolute left-5 top-5 right-5">
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="text-[11px] uppercase tracking-[0.28em] text-white/60">
+                                                                {themeLabel(t)}
+                                                            </div>
+                                                            <div className="text-[11px] uppercase tracking-[0.28em] text-white/55">
+                                                                {p.year}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="mt-3 h-px w-full bg-white/10" />
+
+                                                        <div className="mt-3">
+                                                            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[11px] uppercase tracking-[0.26em] text-white/70">
+                            <span
+                                className="h-2 w-2 rounded-full"
+                                style={{
+                                    background: "linear-gradient(180deg, var(--c1), var(--c2))"
+                                }}
+                            />
+                                                                Preview
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="absolute left-5 right-5 bottom-5">
+                                                        <div className="text-[clamp(18px,2.3vw,22px)] text-white/92">{p.title}</div>
+
+                                                        <div className="mt-2 text-[13px] leading-relaxed text-white/62">
+                                                            {themeTone(t)}
+                                                        </div>
+
+                                                        <div className="mt-3 flex items-center gap-3">
+                                                            <div
+                                                                className="h-px flex-1"
+                                                                style={{
+                                                                    background: "linear-gradient(90deg, var(--c1), transparent)"
+                                                                }}
+                                                            />
+                                                        </div>
+
+                                                        <div className="mt-4 flex items-center justify-between">
+                                                            <div className="text-[12px] uppercase tracking-[0.22em] text-white/80">
+                                                                Open project →
+                                                            </div>
+
+                                                            {p.live ? (
+                                                                <a
+                                                                    href={p.live}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="text-[12px] uppercase tracking-[0.22em] text-white/60 hover:text-white transition-colors"
+                                                                    onClick={(e) => e.stopPropagation()}
+                                                                >
+                                                                    Live →
+                                                                </a>
+                                                            ) : null}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </Link>
                                     ) : null}
+
                                 </div>
                             )
 
