@@ -24,7 +24,7 @@ function HeroSection() {
     }, [])
 
     return (
-        <section className="relative h-screen min-h-screen overflow-hidden">
+        <section className="relative h-[100dvh] lg:h-screen overflow-hidden">
             <Starfield />
 
             <div className="absolute inset-0 z-10 pointer-events-none">
@@ -33,7 +33,7 @@ function HeroSection() {
 
             <div className="relative z-20 h-full pointer-events-none">
                 <div className="w-full max-w-6xl mx-auto h-full px-6 sm:px-10 lg:px-20">
-                    <div className="grid grid-cols-12 h-full grid-rows-[1fr_auto] pb-24 sm:pb-20 lg:pb-16">
+                    <div className="grid grid-cols-12 h-full grid-rows-[1fr_auto] pb-[calc(env(safe-area-inset-bottom)+84px)] sm:pb-20 lg:pb-16">
                         <div ref={leftRef} className="col-span-12 lg:col-span-7 row-start-2 space-y-4 hero-rise">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#005959]/15 backdrop-blur-sm border border-[#005959]/30 badge-float">
                                 <span className="h-2 w-2 rounded-full bg-[#005959] animate-pulse" />

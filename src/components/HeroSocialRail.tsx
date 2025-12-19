@@ -50,7 +50,7 @@ export default function HeroSocialRail() {
         <div className="pointer-events-none z-30">
             <div
                 className="
-          fixed bottom-3 left-1/2 -translate-x-1/2
+          fixed bottom-0 left-1/2 -translate-x-1/2
           lg:bottom-8 lg:right-8 lg:left-auto lg:translate-x-0
         "
                 style={{paddingBottom: "env(safe-area-inset-bottom)"}}
