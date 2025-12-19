@@ -177,7 +177,7 @@ export default function Projects() {
                                                         </div>
 
                                                         <div
-                                                            className="mt-1 text-[13px] text-white/60">{p.subtitle}</div>
+                                                            className="m-1 text-[13px] text-white/60">{p.subtitle}</div>
 
                                                         <div className="mt-2 flex items-center gap-3">
                                                             <div
@@ -275,8 +275,8 @@ export default function Projects() {
                                             />
 
                                             <motion.img
-                                                key={active.cover}
-                                                src={active.cover}
+                                                key={active.hero}
+                                                src={active.hero}
                                                 alt={active.title}
                                                 className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
                                                 initial={{opacity: 0, scale: 1.02}}
@@ -336,62 +336,7 @@ export default function Projects() {
                                                                 "linear-gradient(90deg, var(--p-accent), transparent)"
                                                         }}
                                                     />
-                                                    <div
-                                                        className="text-[11px] uppercase tracking-[0.28em] text-white/55">
-                                                        Open full story →
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="px-5 py-4">
-                                            <div className="text-[12px] uppercase tracking-[0.28em] text-white/55">
-                                                Inside
-                                            </div>
-
-                                            <div className="mt-3 space-y-3">
-                                                <div
-                                                    className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
-                                                    <div
-                                                        className="text-[11px] uppercase tracking-[0.26em] text-white/50">
-                                                        Concept
-                                                    </div>
-                                                    <div className="mt-1 text-[13px] leading-relaxed text-white/70">
-                                                        {active.intro}
-                                                    </div>
-                                                </div>
-
-                                                <div
-                                                    className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
-                                                    <div
-                                                        className="text-[11px] uppercase tracking-[0.26em] text-white/50">
-                                                        Build notes
-                                                    </div>
-                                                    <div className="mt-1 text-[13px] leading-relaxed text-white/70">
-                                                        Role: {active.details.role}. Stack: {active.details.stack}.
-                                                        Timeline: {active.details.timeline}.
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="mt-4 flex items-center justify-between">
-                                                <Link
-                                                    to={`/projects/${active.slug}`}
-                                                    className="text-[12px] uppercase tracking-[0.22em] text-white/80 hover:text-white transition-colors"
-                                                >
-                                                    Open project →
-                                                </Link>
-
-                                                {active.live ? (
-                                                    <a
-                                                        href={active.live}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="text-[12px] uppercase tracking-[0.22em] text-white/70 hover:text-white transition-colors"
-                                                    >
-                                                        Live →
-                                                    </a>
-                                                ) : null}
                                             </div>
                                         </div>
                                     </motion.div>

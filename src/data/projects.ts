@@ -56,8 +56,8 @@ export const projects: Project[] = [
         title: "FluxSim",
         subtitle: "A sleek crypto landing with modern UI polish and interaction details",
         year: "2025",
-        cover: "/images/projects/fluxsim/cover.jpg",
-        hero: "/images/projects/fluxsim/hero.jpg",
+        cover: "/images/projects/fluxsim/cover.png",
+        hero: "/images/projects/fluxsim/hero.png",
         repo: "",
         live: "https://fluxsim-crypto.vercel.app",
         theme: {
@@ -107,7 +107,7 @@ export const projects: Project[] = [
         ],
         gallery: [
             {
-                src: "/images/projects/fluxsim/hero.jpg",
+                src: "/images/projects/fluxsim/hero.png",
                 alt: "FluxSim hero",
                 caption: "Hero: calm layout, strong type, minimal highlights."
             }
@@ -135,8 +135,8 @@ export const projects: Project[] = [
         title: "QB Leaders",
         subtitle: "A minimal finance company website with elegant motion and clear structure",
         year: "2025",
-        cover: "/images/projects/qb-leaders/cover.jpg",
-        hero: "/images/projects/qb-leaders/hero.jpg",
+        cover: "/images/projects/qb-leaders/cover.png",
+        hero: "/images/projects/qb-leaders/hero.png",
         repo: "https://github.com/aniiKhachunts/qb-leaders",
         live: "",
         theme: {
@@ -189,7 +189,7 @@ export const projects: Project[] = [
         ],
         gallery: [
             {
-                src: "/images/projects/qb-leaders/hero.jpg",
+                src: "/images/projects/qb-leaders/hero.png",
                 alt: "QB Leaders hero",
                 caption: "Minimal hero composition designed for trust and clarity."
             }
@@ -217,8 +217,8 @@ export const projects: Project[] = [
         title: "Aurora X1 Landing",
         subtitle: "Futuristic marketing page with clean hierarchy and confident motion",
         year: "2025",
-        cover: "/images/projects/aurora-x1/cover.jpg",
-        hero: "/images/projects/aurora-x1/hero.jpg",
+        cover: "/images/projects/aurora-x1/cover.png",
+        hero: "/images/projects/aurora-x1/hero.png",
         repo: "https://github.com/aniiKhachunts/aurora-x1-landing",
         live: "https://aurora-x1-landing.vercel.app",
         theme: {
@@ -268,12 +268,12 @@ export const projects: Project[] = [
         ],
         gallery: [
             {
-                src: "/images/projects/aurora-x1/hero.jpg",
+                src: "/images/projects/aurora-x1/hero.png",
                 alt: "Aurora X1 hero",
                 caption: "Hero section: decisive typography and controlled glow."
             },
             {
-                src: "/images/projects/aurora-x1/sections.jpg",
+                src: "/videos/projects/aurora-x1/sections.mp4",
                 alt: "Aurora X1 sections",
                 caption: "Section rhythm: consistent spacing and readable feature blocks."
             }

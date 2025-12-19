@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom"
-import { type ProjectBlock, type ProjectTheme, projects } from "../../data/projects.ts"
+import {Link, useParams} from "react-router-dom"
+import {type ProjectBlock, type ProjectTheme, projects} from "../../data/projects.ts"
 
 function resolveTheme(t?: ProjectTheme): ProjectTheme {
     if (t) return t
@@ -14,7 +14,7 @@ function resolveTheme(t?: ProjectTheme): ProjectTheme {
     }
 }
 
-function PageBackdrop({ theme }: { theme: ProjectTheme }) {
+function PageBackdrop({theme}: { theme: ProjectTheme }) {
     const glowLayer = {
         backgroundColor: theme.base,
         backgroundImage: `radial-gradient(1100px circle at 18% 20%, ${theme.glow1}, transparent 55%), radial-gradient(1100px circle at 82% 70%, ${theme.glow2}, transparent 60%), radial-gradient(1200px circle at 50% 110%, rgba(255,255,255,0.06), transparent 55%), linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.92))`
@@ -45,8 +45,8 @@ function PageBackdrop({ theme }: { theme: ProjectTheme }) {
 
     return (
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute inset-0" style={glowLayer} />
-            <div className="absolute inset-0" style={patternStyle} />
+            <div className="absolute inset-0" style={glowLayer}/>
+            <div className="absolute inset-0" style={patternStyle}/>
             <div
                 className="absolute -top-36 -left-28 h-[520px] w-[520px] rounded-full blur-3xl opacity-70"
                 style={{
@@ -59,12 +59,12 @@ function PageBackdrop({ theme }: { theme: ProjectTheme }) {
                     backgroundImage: `radial-gradient(circle at 60% 40%, var(--p-glow2), transparent 64%)`
                 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60"/>
         </div>
     )
 }
 
-function CardGlow({ side = "right" }: { side?: "left" | "right" }) {
+function CardGlow({side = "right"}: { side?: "left" | "right" }) {
     return (
         <div
             className={[
@@ -89,7 +89,7 @@ function AccentStripe() {
     )
 }
 
-function Block({ b }: { b: ProjectBlock }) {
+function Block({b}: { b: ProjectBlock }) {
     if (b.type === "paragraph") {
         return (
             <div className="space-y-3">
@@ -105,8 +105,9 @@ function Block({ b }: { b: ProjectBlock }) {
 
     if (b.type === "quote") {
         return (
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
-                <CardGlow side="left" />
+            <div
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
+                <CardGlow side="left"/>
                 <div className="text-[18px] leading-relaxed text-white/80">“{b.text}”</div>
                 {b.author ? (
                     <div className="mt-4 text-[12px] uppercase tracking-[0.22em] text-white/45">
@@ -138,7 +139,7 @@ function Block({ b }: { b: ProjectBlock }) {
                                         "radial-gradient(700px circle at 12% 30%, var(--p-glow1), transparent 60%)"
                                 }}
                             />
-                            <AccentStripe />
+                            <AccentStripe/>
                             <div className="relative pl-3">{it}</div>
                         </li>
                     ))}
@@ -150,7 +151,7 @@ function Block({ b }: { b: ProjectBlock }) {
     if (b.type === "image") {
         return (
             <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/35">
-                <CardGlow side="right" />
+                <CardGlow side="right"/>
                 <div className="relative aspect-[16/9] w-full">
                     <img
                         src={b.src}
@@ -165,7 +166,7 @@ function Block({ b }: { b: ProjectBlock }) {
                                 "radial-gradient(900px circle at 20% 25%, var(--p-glow1), transparent 55%), radial-gradient(900px circle at 80% 70%, var(--p-glow2), transparent 60%)"
                         }}
                     />
-                    <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
+                    <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
                 </div>
                 {b.caption ? (
                     <div className="px-5 py-4 text-[13px] text-white/55">{b.caption}</div>
@@ -197,7 +198,7 @@ function Block({ b }: { b: ProjectBlock }) {
 }
 
 export default function ProjectPage() {
-    const { slug } = useParams()
+    const {slug} = useParams()
     const idx = projects.findIndex((p) => p.slug === slug)
     const project = idx >= 0 ? projects[idx] : null
 
@@ -229,7 +230,7 @@ export default function ProjectPage() {
 
     return (
         <section className="relative min-h-screen w-full" style={pageVars}>
-            <PageBackdrop theme={theme} />
+            <PageBackdrop theme={theme}/>
 
             <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-20 pt-18 pb-24">
                 <div className="mt-6 flex items-center justify-between">
@@ -248,7 +249,8 @@ export default function ProjectPage() {
                 <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
                     <div className="lg:col-span-7">
                         <div className="text-[clamp(34px,5vw,56px)] leading-[0.98]">
-                            <span className="bg-[linear-gradient(90deg,var(--p-accent),rgba(255,255,255,0.94),var(--p-accent2))] bg-clip-text text-transparent">
+                            <span
+                                className="bg-[linear-gradient(90deg,var(--p-accent),rgba(255,255,255,0.94),var(--p-accent2))] bg-clip-text text-transparent">
                                 {project.title}
                             </span>
                         </div>
@@ -271,8 +273,9 @@ export default function ProjectPage() {
                     </div>
 
                     <div className="lg:col-span-5">
-                        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
-                            <CardGlow side="right" />
+                        <div
+                            className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
+                            <CardGlow side="right"/>
                             <div className="text-[12px] uppercase tracking-[0.28em] text-white/55">
                                 Project facts
                             </div>
@@ -334,10 +337,11 @@ export default function ProjectPage() {
                     </div>
                 </div>
 
-                <div className="mt-12 relative overflow-hidden rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl">
+                <div
+                    className="mt-12 relative overflow-hidden rounded-2xl border border-white/10 bg-black/35 backdrop-blur-xl">
                     <div className="relative aspect-[16/9] w-full">
                         <img
-                            src={project.hero ?? project.cover}
+                            src={project.cover}
                             alt={project.title}
                             className="absolute inset-0 h-full w-full object-cover object-center"
                             draggable={false}
@@ -349,8 +353,8 @@ export default function ProjectPage() {
                                     "radial-gradient(900px circle at 20% 25%, var(--p-glow1), transparent 55%), radial-gradient(900px circle at 80% 70%, var(--p-glow2), transparent 60%)"
                             }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
-                        <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent"/>
+                        <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"/>
                     </div>
                 </div>
 
@@ -360,13 +364,14 @@ export default function ProjectPage() {
                             <div className="text-[12px] uppercase tracking-[0.28em] text-white/55">
                                 The brief
                             </div>
-                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
-                                <CardGlow side="left" />
+                            <div
+                                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
+                                <CardGlow side="left"/>
                                 <div className="text-white/80 text-[15px] leading-relaxed">
                                     {project.brief.context}
                                 </div>
 
-                                <div className="mt-6 h-px bg-white/10" />
+                                <div className="mt-6 h-px bg-white/10"/>
 
                                 <div className="mt-6 text-white/75 text-[15px] leading-relaxed">
                                     <span className="text-white/55">Goal:</span> {project.brief.goal}
@@ -398,7 +403,7 @@ export default function ProjectPage() {
                                                     "radial-gradient(800px circle at 10% 35%, var(--p-glow1), transparent 62%)"
                                             }}
                                         />
-                                        <AccentStripe />
+                                        <AccentStripe/>
                                         <div className="relative pl-3">{h}</div>
                                     </div>
                                 ))}
@@ -411,15 +416,16 @@ export default function ProjectPage() {
                             </div>
                             <div className="space-y-10">
                                 {project.story.map((b, i) => (
-                                    <Block key={i} b={b} />
+                                    <Block key={i} b={b}/>
                                 ))}
                             </div>
                         </div>
                     </div>
 
                     <div className="lg:col-span-5 space-y-10">
-                        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
-                            <CardGlow side="right" />
+                        <div
+                            className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
+                            <CardGlow side="right"/>
                             <div className="text-[12px] uppercase tracking-[0.28em] text-white/55">
                                 Outcomes
                             </div>
@@ -447,21 +453,37 @@ export default function ProjectPage() {
                                         className="relative overflow-hidden rounded-2xl border border-white/10"
                                     >
                                         <div className="relative aspect-[4/3] w-full">
-                                            <img
-                                                src={g.src}
-                                                alt={g.alt}
-                                                className="absolute inset-0 h-full w-full object-cover object-center"
-                                                draggable={false}
-                                            />
-                                            <div
-                                                className="absolute inset-0"
-                                                style={{
-                                                    backgroundImage:
-                                                        "radial-gradient(750px circle at 18% 22%, var(--p-glow1), transparent 58%), radial-gradient(750px circle at 82% 74%, var(--p-glow2), transparent 60%)"
-                                                }}
-                                            />
-                                            <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
+                                            {g.src.endsWith(".mp4") ? (
+                                                <video
+                                                    src={g.src}
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="absolute inset-0 h-full w-full object-cover object-center"
+                                                />
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src={g.src}
+                                                        alt={g.alt}
+                                                        className="absolute inset-0 h-full w-full object-cover object-center"
+                                                        draggable={false}
+                                                    />
+
+                                                    <div
+                                                        className="absolute inset-0"
+                                                        style={{
+                                                            backgroundImage:
+                                                                "radial-gradient(750px circle at 18% 22%, var(--p-glow1), transparent 58%), radial-gradient(750px circle at 82% 74%, var(--p-glow2), transparent 60%)"
+                                                        }}
+                                                    />
+
+                                                    <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
+                                                </>
+                                            )}
                                         </div>
+
                                         {g.caption ? (
                                             <div className="px-4 py-3 text-[13px] text-white/55">
                                                 {g.caption}
@@ -472,8 +494,9 @@ export default function ProjectPage() {
                             </div>
                         </div>
 
-                        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
-                            <CardGlow side="left" />
+                        <div
+                            className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm px-6 py-6">
+                            <CardGlow side="left"/>
                             <div className="text-[12px] uppercase tracking-[0.28em] text-white/55">
                                 Next
                             </div>
@@ -513,7 +536,7 @@ export default function ProjectPage() {
                     </div>
                 </div>
 
-                <div className="mt-14 h-px w-full bg-white/10" />
+                <div className="mt-14 h-px w-full bg-white/10"/>
             </div>
         </section>
     )
