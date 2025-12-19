@@ -461,16 +461,6 @@ export default function ProjectPage() {
                                                         className="absolute inset-0 h-full w-full object-cover object-center"
                                                         draggable={false}
                                                     />
-
-                                                    <div
-                                                        className="absolute inset-0"
-                                                        style={{
-                                                            backgroundImage:
-                                                                "radial-gradient(750px circle at 18% 22%, var(--p-glow1), transparent 58%), radial-gradient(750px circle at 82% 74%, var(--p-glow2), transparent 60%)"
-                                                        }}
-                                                    />
-
-                                                    <div className="absolute inset-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" />
                                                 </>
                                             )}
                                         </div>
