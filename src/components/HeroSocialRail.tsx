@@ -1,7 +1,5 @@
-import useVisualViewportBottom from "../hooks/useVisualViewportBottom.ts";
 
 export default function HeroSocialRail() {
-    useVisualViewportBottom()
 
     const items = [
         {

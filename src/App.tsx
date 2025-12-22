@@ -8,8 +8,10 @@ import Header from "./components/layout/Header"
 import CosmicCursor from "./components/CosmicCursor"
 import ProjectPage from "./pages/Projects/ProjectPage.tsx";
 import ScrollToTop from "./helpers/ScrollToTop.tsx";
+import useVisualViewportVars from "./hooks/useVisualViewportVars.ts";
 
 function AnimatedRoutes() {
+    useVisualViewportVars()
     const location = useLocation()
 
     return (

@@ -24,7 +24,7 @@ function HeroSection() {
     }, [])
 
     return (
-        <section className="relative h-[100dvh] lg:h-screen overflow-hidden">
+        <section className="relative overflow-hidden" style={{ height: "var(--vv-h, 100svh)" }}>
             <Starfield />
 
             <div className="absolute inset-0 z-10 pointer-events-none">
