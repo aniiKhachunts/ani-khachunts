@@ -3,6 +3,25 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+    --app-svh: 100vh;
+    --app-dvh: 100vh;
+    --safe-bottom: 0px;
+}
+
+@supports (height: 100svh) {
+    :root {
+        --app-svh: 100svh;
+    }
+}
+
+@supports (height: 100dvh) {
+    :root {
+        --app-dvh: 100dvh;
+    }
+}
+
+:root {
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .logo {
