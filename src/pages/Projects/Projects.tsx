@@ -195,7 +195,7 @@ export default function Projects() {
                                                         {String(idx + 1).padStart(2, "0")}
                                                     </div>
 
-                                                    <div className="min-w-0">
+                                                    <div className="min-w-0 mr-5">
                                                         <div className="flex items-baseline gap-3">
                                                             <div
                                                                 className="truncate text-[clamp(16px,2.1vw,20px)] text-white/92">
