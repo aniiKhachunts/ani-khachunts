@@ -6,7 +6,7 @@ export type ProjectBlock =
     | { type: "twoCol"; leftTitle?: string; left: string; rightTitle?: string; right: string }
 
 export type ProjectTheme = {
-    kind: "fluxsim" | "qb" | "aurora"
+    kind: "fluxsim"| "aurum" | "qb" | "aurora"
     base: string
     accent: string
     accent2: string
@@ -56,7 +56,7 @@ export const projects: Project[] = [
         title: "FluxSim",
         subtitle: "A sleek crypto landing with modern UI polish and interaction details",
         year: "2025",
-        cover: "/images/projects/fluxsim/cover.png",
+        cover: "/images/projects/fluxsim/hero.png",
         hero: "/images/projects/fluxsim/hero.png",
         repo: "",
         live: "https://fluxsim-crypto.vercel.app",
@@ -131,11 +131,107 @@ export const projects: Project[] = [
         ]
     },
     {
+        slug: "aurum-admin",
+        title: "Aurum Admin",
+        subtitle: "A production-style admin dashboard with authentication, data management, and audit-friendly UX",
+        year: "2025",
+        cover: "/images/projects/aurum-admin/cover.png",
+        hero: "/images/projects/aurum-admin/hero.png",
+        repo: "https://github.com/aniiKhachunts/aurum-admin",
+        live: "https://aurum-admin-pied.vercel.app/dashboard",
+        theme: {
+            kind: "aurum",
+            base: "#0B0E14",
+            accent: "#3B82F6",
+            accent2: "#22D3EE",
+            glow1: "rgba(59,130,246,0.12)",
+            glow2: "rgba(34,211,238,0.08)",
+            pattern: "grid"
+        },
+        intro:
+            "A full admin dashboard built like a real internal tool: sign-in, protected routes, structured data tables, and an interface designed for day-to-day operations. The focus is clarity, speed, and control — the UI is calm and consistent, while the system underneath supports real CRUD flows and traceable actions.",
+        brief: {
+            context:
+                "Dashboards fail when they’re just “screens”: real admins need predictable structure, fast scanning, and confidence that actions are recorded and reversible. This project was built to feel like a production panel — not a demo page.",
+            goal:
+                "Deliver an admin that supports authenticated access, data management workflows, and audit-friendly patterns (clear entities, consistent tables, stable navigation, and action visibility).",
+            constraints:
+                "Keep the UI fast and clean even with data-heavy views, and structure the codebase so new entities and sections can be added without rewriting the foundation."
+        },
+        highlights: [
+            "Authentication + protected routes for a real admin flow",
+            "Data-driven tables and detail views designed for fast scanning",
+            "Audit-aware structure: actions and changes are treated as first-class UX",
+            "Componentized layout system for consistent pages and predictable extension"
+        ],
+        outcomes: [
+            {
+                title: "Operational UX",
+                text: "The dashboard is structured around real usage: quick navigation, stable layouts, and clear action patterns that reduce mistakes and improve confidence."
+            },
+            {
+                title: "Backend-ready foundation",
+                text: "The app is wired to a real data layer and built to scale: adding a new entity is a repeatable process, not a redesign."
+            }
+        ],
+        details: {
+            role: "Front-end Development + Data Integration",
+            timeline: "1–2 weeks",
+            stack: "React, TypeScript, Vite, Tailwind CSS, TanStack Query, React Router",
+            responsibilities:
+                "Auth + protected routing, data layer integration, dashboard layout system, table UX, error/loading states, deployment to Vercel"
+        },
+        links: [
+            { label: "View", href: "https://aurum-admin-pied.vercel.app" },
+            { label: "Repository", href: "https://github.com/aniiKhachunts/aurum-admin" }
+        ],
+        gallery: [
+            {
+                src: "/images/projects/fluxsim/hero.png",
+                alt: "Aurum Admin dashboard overview",
+                caption: "Dashboard: a clean layout built for day-to-day admin work."
+            }
+        ],
+        story: [
+            {
+                type: "paragraph",
+                title: "What this is",
+                text:
+                    "Aurum Admin is an internal-style dashboard used to manage entities through authenticated access. It’s designed around real operational needs: consistent navigation, repeatable page layouts, and data views that support scanning, filtering, and action-driven workflows."
+            },
+            {
+                type: "twoCol",
+                leftTitle: "UX focus",
+                left:
+                    "Calm structure, consistent spacing, and predictable components so the interface stays easy to use even when the data grows.",
+                rightTitle: "Engineering focus",
+                right:
+                    "A scalable foundation: typed API mapping, centralized data fetching patterns, and page composition that makes adding sections straightforward."
+            },
+            {
+                type: "bullets",
+                title: "System patterns",
+                items: [
+                    "Protected routes and session-aware UI states",
+                    "Server state handled through a predictable query layer",
+                    "Clear loading / empty / error handling across pages",
+                    "Reusable layout primitives for dashboard pages"
+                ]
+            },
+            {
+                type: "quote",
+                text:
+                    "The goal wasn’t to make it flashy — it was to make it feel reliable. Admin tools should feel like control, not chaos.",
+                author: "Project note"
+            }
+        ]
+    },
+    {
         slug: "qb-leaders-site",
         title: "QB Leaders",
         subtitle: "A minimal finance company website with elegant motion and clear structure",
         year: "2025",
-        cover: "/images/projects/qb-leaders/cover.png",
+        cover: "/images/projects/qb-leaders/hero.png",
         hero: "/images/projects/qb-leaders/hero.png",
         repo: "https://github.com/aniiKhachunts/qb-leaders",
         live: "",
@@ -217,7 +313,7 @@ export const projects: Project[] = [
         title: "Aurora X1 Landing",
         subtitle: "Futuristic marketing page with clean hierarchy and confident motion",
         year: "2025",
-        cover: "/images/projects/aurora-x1/cover.png",
+        cover: "/images/projects/aurora-x1/hero.png",
         hero: "/images/projects/aurora-x1/hero.png",
         repo: "https://github.com/aniiKhachunts/aurora-x1-landing",
         live: "https://aurora-x1-landing.vercel.app",
@@ -307,3 +403,4 @@ export const projects: Project[] = [
         ]
     }
 ]
+

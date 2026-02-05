@@ -18,6 +18,7 @@ function resolveTheme(t?: ProjectTheme | null): ProjectTheme {
 
 function themeLabel(t: ProjectTheme) {
     if (t.kind === "qb") return "Finance"
+    if (t.kind === "aurum") return "Admin Dashboard"
     if (t.kind === "aurora") return "Futuristic"
     return "Crypto"
 }
