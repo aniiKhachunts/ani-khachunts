@@ -444,7 +444,7 @@ export default function ProjectPage() {
                                         className="relative overflow-hidden rounded-2xl border border-white/10"
                                     >
                                         <div className="relative aspect-[4/3] w-full">
-                                            {g.src.endsWith(".mp4") ? (
+                                            {g.src.endsWith(".mp4") || g.src.endsWith(".mov") ? (
                                                 <video
                                                     src={g.src}
                                                     autoPlay

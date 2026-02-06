@@ -110,6 +110,11 @@ export const projects: Project[] = [
                 src: "/images/projects/fluxsim/hero.png",
                 alt: "FluxSim hero",
                 caption: "Hero: calm layout, strong type, minimal highlights."
+            },
+            {
+                src: "/videos/projects/fluxsim/sections.mov",
+                alt: "FluxSim sections",
+                caption: "Section rhythm: consistent spacing and readable feature blocks."
             }
         ],
         story: [
@@ -288,7 +293,7 @@ export const projects: Project[] = [
                 src: "/images/projects/qb-leaders/hero.png",
                 alt: "QB Leaders hero",
                 caption: "Minimal hero composition designed for trust and clarity."
-            }
+            },
         ],
         story: [
             {
