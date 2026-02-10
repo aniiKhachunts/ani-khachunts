@@ -139,7 +139,7 @@ export const projects: Project[] = [
         slug: "aurum-admin",
         title: "Aurum Admin",
         subtitle: "A production-style admin dashboard with authentication, data management, and audit-friendly UX",
-        year: "2025",
+        year: "2026",
         cover: "/images/projects/aurum-admin/cover.png",
         hero: "/images/projects/aurum-admin/hero.png",
         repo: "https://github.com/aniiKhachunts/aurum-admin",
@@ -194,6 +194,11 @@ export const projects: Project[] = [
             {
                 src: "/images/projects/fluxsim/hero.png",
                 alt: "Aurum Admin dashboard overview",
+                caption: "Dashboard: a clean layout built for day-to-day admin work."
+            },
+            {
+                src: "/videos/projects/aurum-admin/sections.mov",
+                alt: "Aurum Admin sections overview",
                 caption: "Dashboard: a clean layout built for day-to-day admin work."
             }
         ],

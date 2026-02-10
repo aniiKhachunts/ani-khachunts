@@ -2,131 +2,187 @@ import {useEffect, useRef, useState} from "react";
 
 type P = { x: number; y: number; vx: number; vy: number; life: number; size: number };
 
+const MAX = 140;
+
 export default function StarTrailCursor() {
-    const wrapRef = useRef<HTMLDivElement | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const coreRef = useRef<HTMLDivElement | null>(null);
-    const layerRef = useRef<HTMLDivElement | null>(null);
 
-    const target = useRef({x: 0, y: 0});
-    const core = useRef({x: 0, y: 0});
-    const last = useRef({x: 0, y: 0});
+    const target = useRef({ x: 0, y: 0 });
+    const core = useRef({ x: 0, y: 0 });
+    const last = useRef({ x: 0, y: 0 });
 
-    const parts = useRef<P[]>([]);
+    const parts = useRef<P[]>(
+        Array.from({ length: MAX }, () => ({ x: 0, y: 0, vx: 0, vy: 0, life: 0, size: 0 }))
+    );
+    const head = useRef(0);
+
+    const reduceRef = useRef(false);
+    const visibleRef = useRef(false);
+    const activeRef = useRef(false);
+
     const [visible, setVisible] = useState(false);
     const [active, setActive] = useState(false);
 
     useEffect(() => {
-            const isTouch = window.matchMedia("(hover: none)").matches || "ontouchstart" in window;
-            if (isTouch) return;
+        const isTouch = window.matchMedia("(hover: none)").matches || "ontouchstart" in window;
+        if (isTouch) return;
 
-            const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        reduceRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-            const isInteractive = (el: Element | null) => {
-                if (!el) return false;
-                return Boolean(
-                    (el as HTMLElement).closest('a,button,[role="button"],input,textarea,select,summary,[data-cursor="link"]')
-                );
-            };
+        const canvas = canvasRef.current;
+        if (!canvas) return;
 
-            const onMove = (e: PointerEvent) => {
-                target.current.x = e.clientX;
-                target.current.y = e.clientY;
-                if (!visible) setVisible(true);
-            };
+        const ctx = canvas.getContext("2d", { alpha: true });
+        if (!ctx) return;
 
-            const onOver = (e: Event) => {
-                setActive(isInteractive(e.target as Element | null));
-            };
+        const resize = () => {
+            const dpr = Math.min(2, window.devicePixelRatio || 1);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
 
-            const onLeave = () => setVisible(false);
+            canvas.width = Math.floor(w * dpr);
+            canvas.height = Math.floor(h * dpr);
+            canvas.style.width = w + "px";
+            canvas.style.height = h + "px";
 
-            window.addEventListener("pointermove", onMove, {passive: true});
-            window.addEventListener("pointerover", onOver, {passive: true});
-            window.addEventListener("mouseleave", onLeave);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        };
 
-            let raf = 0;
+        const isInteractive = (el: Element | null) => {
+            if (!el) return false;
+            return Boolean(
+                (el as HTMLElement).closest(
+                    'a,button,[role="button"],input,textarea,select,summary,[data-cursor="link"]'
+                )
+            );
+        };
 
-            const spawn = (dx: number, dy: number, speed: number) => {
-                const count = reduce ? 1 : speed > 9 ? 3 : speed > 4 ? 2 : 1;
-                for (let i = 0; i < count; i++) {
-                    const jx = (Math.random() - 0.5) * 1.8;
-                    const jy = (Math.random() - 0.5) * 1.8;
-                    const s = active ? 1.12 : 1;
-                    parts.current.push({
-                        x: core.current.x + jx,
-                        y: core.current.y + jy,
-                        vx: -dx * (0.06 + Math.random() * 0.05) * s,
-                        vy: -dy * (0.06 + Math.random() * 0.05) * s,
-                        life: active ? 1 : 0.9,
-                        size: (active ? 2.2 : 1.8) + Math.random() * 1.2
-                    });
-                }
-                if (parts.current.length > 120) parts.current.splice(0, parts.current.length - 120);
-            };
+        const onMove = (e: PointerEvent) => {
+            target.current.x = e.clientX;
+            target.current.y = e.clientY;
 
-            const tick = () => {
-                    const tx = target.current.x;
-                    const ty = target.current.y;
+            if (!visibleRef.current) {
+                visibleRef.current = true;
+                setVisible(true);
+            }
+        };
 
-                    const ease = reduce ? 1 : 0.62;
-                    core.current.x += (tx - core.current.x) * ease;
-                    core.current.y += (ty - core.current.y) * ease;
+        const onOver = (e: Event) => {
+            const next = isInteractive(e.target as Element | null);
+            if (next !== activeRef.current) {
+                activeRef.current = next;
+                setActive(next);
+            }
+        };
 
-                    const dx = core.current.x - last.current.x;
-                    const dy = core.current.y - last.current.y;
-                    const speed = Math.hypot(dx, dy);
+        const onLeave = () => {
+            if (!visibleRef.current) return;
+            visibleRef.current = false;
+            setVisible(false);
+        };
 
-                    if (speed > (reduce ? 6 : 0.9)) {
+        window.addEventListener("pointermove", onMove, { passive: true });
+        window.addEventListener("pointerover", onOver, { passive: true });
+        window.addEventListener("mouseleave", onLeave);
+        window.addEventListener("resize", resize, { passive: true });
 
-                        spawn(dx, dy, speed);
-                        last.current.x = core.current.x;
-                        last.current.y = core.current.y;
-                    }
+        resize();
 
-                    for (let i = parts.current.length - 1; i >= 0; i--) {
-                        const p = parts.current[i];
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        p.vx *= 0.92;
-                        p.vy *= 0.92;
-                        p.life -= active ? 0.028 : 0.035;
-                        if (p.life <= 0) parts.current.splice(i, 1);
-                    }
+        const spawn = (dx: number, dy: number, speed: number) => {
+            const reduce = reduceRef.current;
+            const count = reduce ? 1 : speed > 9 ? 3 : speed > 4 ? 2 : 1;
+            const mult = activeRef.current ? 1.12 : 1;
 
-                    if (coreRef.current) {
-                        coreRef.current.style.transform = `translate3d(${core.current.x}px, ${core.current.y}px, 0)`;
-                    }
+            for (let i = 0; i < count; i++) {
+                const jx = (Math.random() - 0.5) * 1.8;
+                const jy = (Math.random() - 0.5) * 1.8;
 
-                    if (layerRef.current) {
-                        let html = "";
-                        for (let i = 0; i < parts.current.length; i++) {
-                            const p = parts.current[i];
-                            const a = Math.max(0, Math.min(1, p.life));
-                            const r = p.size;
-                            html += `<i style="transform:translate3d(${p.x}px,${p.y}px,0);opacity:${a};width:${r}px;height:${r}px;"></i>`;
-                        }
-                        layerRef.current.innerHTML = html;
-                    }
+                const idx = head.current;
+                head.current = (head.current + 1) % MAX;
 
-                    raf = requestAnimationFrame(tick);
-                }
-            ;
+                const p = parts.current[idx];
+                p.x = core.current.x + jx;
+                p.y = core.current.y + jy;
+                p.vx = -dx * (0.06 + Math.random() * 0.05) * mult;
+                p.vy = -dy * (0.06 + Math.random() * 0.05) * mult;
+                p.life = activeRef.current ? 1 : 0.9;
+                p.size = (activeRef.current ? 2.4 : 2.0) + Math.random() * 1.4;
+            }
+        };
+
+        const drawStar = (x: number, y: number, r: number, a: number) => {
+            const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+            g.addColorStop(0, `rgba(255,255,255,${a})`);
+            g.addColorStop(0.35, `rgba(255,255,255,${a * 0.55})`);
+            g.addColorStop(1, `rgba(255,255,255,0)`);
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        };
+
+        let raf = 0;
+
+        const tick = () => {
+            const reduce = reduceRef.current;
+
+            const tx = target.current.x;
+            const ty = target.current.y;
+
+            const ease = reduce ? 1 : 0.62;
+            core.current.x += (tx - core.current.x) * ease;
+            core.current.y += (ty - core.current.y) * ease;
+
+            const dx = core.current.x - last.current.x;
+            const dy = core.current.y - last.current.y;
+            const speed = Math.hypot(dx, dy);
+
+            if (speed > (reduce ? 6 : 0.9)) {
+                spawn(dx, dy, speed);
+                last.current.x = core.current.x;
+                last.current.y = core.current.y;
+            }
+
+            if (coreRef.current) {
+                coreRef.current.style.transform = `translate3d(${core.current.x}px, ${core.current.y}px, 0)`;
+            }
+
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            ctx.globalCompositeOperation = "lighter";
+
+            for (let i = 0; i < MAX; i++) {
+                const p = parts.current[i];
+                if (p.life <= 0) continue;
+
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vx *= 0.92;
+                p.vy *= 0.92;
+                p.life -= activeRef.current ? 0.028 : 0.035;
+
+                const a = p.life < 0 ? 0 : p.life > 1 ? 1 : p.life;
+                drawStar(p.x, p.y, p.size, a);
+            }
+
+            ctx.globalCompositeOperation = "source-over";
 
             raf = requestAnimationFrame(tick);
+        };
 
-            return () => {
-                cancelAnimationFrame(raf);
-                window.removeEventListener("pointermove", onMove);
-                window.removeEventListener("pointerover", onOver);
-                window.removeEventListener("mouseleave", onLeave);
-            };
-        }, [visible, active]
-    )
-    ;
+        raf = requestAnimationFrame(tick);
+
+        return () => {
+            cancelAnimationFrame(raf);
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("pointerover", onOver);
+            window.removeEventListener("mouseleave", onLeave);
+            window.removeEventListener("resize", resize);
+        };
+    }, []);
 
     return (
         <div
-            ref={wrapRef}
             className={[
                 "startrail-cursor",
                 visible ? "is-visible" : "",
@@ -134,8 +190,8 @@ export default function StarTrailCursor() {
             ].join(" ")}
             aria-hidden="true"
         >
-            <div ref={layerRef} className="startrail-layer"/>
-            <div ref={coreRef} className="startrail-core"/>
+            <canvas ref={canvasRef} className="startrail-canvas" />
+            <div ref={coreRef} className="startrail-core" />
         </div>
     );
 }

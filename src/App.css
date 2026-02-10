@@ -65,3 +65,40 @@ body.home-lock {
     overscroll-behavior: none;
     touch-action: none;
 }
+
+
+.startrail-cursor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.startrail-canvas {
+    position: absolute;
+    inset: 0;
+    transform: translateZ(0);
+}
+
+.startrail-core {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-radius: 999px;
+    opacity: 0;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.45) 35%, rgba(255,255,255,0) 70%);
+    filter: drop-shadow(0 0 12px rgba(255,255,255,0.45));
+    transform: translate3d(-9999px, -9999px, 0);
+}
+
+.startrail-cursor.is-visible .startrail-core {
+    opacity: 1;
+}
+
+.startrail-cursor.is-active .startrail-core {
+    filter: drop-shadow(0 0 18px rgba(255,255,255,0.65));
+}
