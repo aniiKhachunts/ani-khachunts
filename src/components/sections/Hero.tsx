@@ -6,7 +6,10 @@ import HeroSocialRail from "../HeroSocialRail.tsx"
 
 function HeroSection() {
     const leftRef = useRef<HTMLDivElement | null>(null)
+    const railRef = useRef<HTMLDivElement | null>(null)
+
     const [leftH, setLeftH] = useState<number | null>(null)
+    const [railH, setRailH] = useState<number>(0)
 
     useEffect(() => {
         const el = leftRef.current
@@ -23,6 +26,22 @@ function HeroSection() {
         return () => ro.disconnect()
     }, [])
 
+    useEffect(() => {
+        const el = railRef.current
+        if (!el) return
+
+        const ro = new ResizeObserver(() => {
+            setRailH(el.getBoundingClientRect().height)
+        })
+
+        ro.observe(el)
+        setRailH(el.getBoundingClientRect().height)
+
+        return () => ro.disconnect()
+    }, [])
+
+    const gridPadBottom = `calc(env(safe-area-inset-bottom) + ${Math.max(railH, 84)}px + 16px)`
+
     return (
         <section className="relative overflow-hidden" style={{ height: "var(--vv-h, 100svh)" }}>
             <Starfield />
@@ -33,16 +52,18 @@ function HeroSection() {
 
             <div className="relative z-20 h-full pointer-events-none">
                 <div className="w-full max-w-6xl mx-auto h-full px-6 sm:px-10 lg:px-20">
-                    <div className="grid grid-cols-12 h-full grid-rows-[1fr] lg:grid-rows-[1fr_auto] pb-[calc(env(safe-area-inset-bottom)+84px)] sm:pb-20 lg:pb-16">
+                    <div
+                        className="grid grid-cols-12 h-full grid-rows-[1fr] lg:grid-rows-[1fr_auto]"
+                        style={{ paddingBottom: gridPadBottom }}
+                    >
                         <div
                             ref={leftRef}
                             className="
-  col-span-12 lg:col-span-7 row-start-2 hero-rise
-  absolute left-6 top-[52%] w-fit max-w-[70%]
-  lg:static lg:top-auto lg:left-auto lg:w-auto lg:max-w-none
-  space-y-2 sm:space-y-3
-"
-
+                col-span-12 lg:col-span-7 row-start-2 hero-rise
+                absolute left-6 top-[52%] w-fit max-w-[70%]
+                lg:static lg:top-auto lg:left-auto lg:w-auto lg:max-w-none
+                space-y-2 sm:space-y-3
+              "
                         >
                             <p className="handwritten text-3xl sm:text-4xl text-white/90">
                                 Creative <span className="text-[#005959]">developer</span>
@@ -51,23 +72,25 @@ function HeroSection() {
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#005959]/15 backdrop-blur-sm border border-[#005959]/30 badge-float w-fit">
                                 <span className="h-2 w-2 rounded-full bg-[#005959] animate-pulse" />
                                 <span className="text-[11px] tracking-[0.18em] uppercase text-[#7fd7c8]">
-            Open to work
-        </span>
+                  Open to work
+                </span>
                             </div>
                         </div>
 
-
                         <div
-                            className="col-span-12 lg:col-span-5 lg:justify-self-end lg:mx-[50px] row-start-2 hero-rise"
+                            className="col-span-12 lg:col-span-5 lg:justify-self-end lg:mx-[50px] row-start-2 hero-rise -translate-y-6 sm:-translate-y-8 lg:translate-y-0"
                             style={leftH ? { height: `${leftH}px` } : undefined}
                         >
                             <HeroQuickLinks />
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <HeroSocialRail />
+            <div ref={railRef} className="relative z-30">
+                <HeroSocialRail />
+            </div>
         </section>
     )
 }
