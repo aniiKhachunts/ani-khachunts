@@ -192,7 +192,7 @@ export const projects: Project[] = [
         ],
         gallery: [
             {
-                src: "/images/projects/fluxsim/hero.png",
+                src: "/images/projects/aurum-admin/hero.png",
                 alt: "Aurum Admin dashboard overview",
                 caption: "Dashboard: a clean layout built for day-to-day admin work."
             },

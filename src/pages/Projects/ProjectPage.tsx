@@ -319,20 +319,26 @@ export default function ProjectPage() {
                             </dl>
 
                             {project.links?.length ? (
-                                <div className="mt-6 flex flex-wrap gap-3">
-                                    {project.links.map((l) => (
+                                <div className="mt-8 flex flex-wrap gap-4">
+                                    {project.links.map((l, i) => (
                                         <a
                                             key={l.href}
                                             href={l.href}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="text-[12px] uppercase tracking-[0.22em] text-white/75 hover:text-[var(--p-accent)] transition-colors"
+                                            className={[
+                                                "relative inline-flex items-center justify-center rounded-full px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] transition-all duration-300",
+                                                i === 0
+                                                    ? "bg-[var(--p-accent)] text-black hover:brightness-110"
+                                                    : "border border-white/15 bg-white/[0.04] text-white hover:border-[var(--p-accent)] hover:text-[var(--p-accent)]"
+                                            ].join(" ")}
                                         >
-                                            {l.label} →
+                                            {l.label}
                                         </a>
                                     ))}
                                 </div>
                             ) : null}
+
                         </div>
                     </div>
                 </div>
