@@ -104,7 +104,7 @@ export default function Projects() {
 
     return (
         <section className="relative min-h-screen w-full" style={pageVars}>
-            <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-20 pt-28 pb-24">
+            <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-20 pt-24 pb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
                     <div className="lg:col-span-7">
                         <div className="flex items-end justify-between">

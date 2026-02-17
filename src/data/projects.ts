@@ -6,7 +6,7 @@ export type ProjectBlock =
     | { type: "twoCol"; leftTitle?: string; left: string; rightTitle?: string; right: string }
 
 export type ProjectTheme = {
-    kind: "fluxsim"| "aurum" | "qb" | "aurora"
+    kind: "fluxsim" | "aurum" | "qb" | "aurora" | "solaris"
     base: string
     accent: string
     accent2: string
@@ -298,7 +298,7 @@ export const projects: Project[] = [
                 src: "/images/projects/qb-leaders/hero.png",
                 alt: "QB Leaders hero",
                 caption: "Minimal hero composition designed for trust and clarity."
-            },
+            }
         ],
         story: [
             {
@@ -411,6 +411,107 @@ export const projects: Project[] = [
                 ]
             }
         ]
+    },
+    {
+        slug: "solaris-light-system",
+        title: "Solaris",
+        subtitle: "An experimental UI system where light drives depth, mood, and interaction",
+        year: "2026",
+        cover: "/images/projects/solaris/cover.png",
+        hero: "/images/projects/solaris/hero.png",
+        repo: "https://github.com/aniiKhachunts/solar-toggle",
+        live: "https://solar-toggle.vercel.app/",
+        theme: {
+            kind: "solaris",
+            base: "#0A0B10",
+            accent: "#F4B63A",
+            accent2: "#FF8A5B",
+            glow1: "rgba(244,182,58,0.22)",
+            glow2: "rgba(255,138,91,0.18)",
+            pattern: "diagonal"
+        },
+        intro:
+            "Solaris is an experimental, interaction-first UI playground where a draggable sun becomes the source of truth for the entire interface. Light is treated as a design driver: it shapes atmosphere, shadow direction, rim highlights, and the overall mood in real time — creating a cohesive, tactile system instead of a static theme toggle.",
+        brief: {
+            context:
+                "Most UI systems are built on static tokens: fixed elevation, predefined themes, isolated motion. Solaris explores a different model — a physical, UI-driven system where one interactive light source defines how surfaces behave and how the interface feels.",
+            goal:
+                "Build a single-viewport playground where users manipulate a simulated sun and watch the UI respond as a coordinated system: day/night transitions, atmospheric blending, and cards that react with depth, shadow offset, and rim lighting.",
+            constraints:
+                "Keep the experience performant and readable in both modes, with effects that feel intentional rather than noisy — all within one viewport, without scrolling or layout breaks."
+        },
+        highlights: [
+            "Draggable sun / moon controller as the primary interaction model",
+            "Horizon-based day/night transition driven by sun height",
+            "Atmospheric layering: sky, glow, aurora, and stars blend dynamically",
+            "Position-aware cards with real-time shadow vectors and rim lighting",
+            "Single-viewport layout with strict no-scroll UX"
+        ],
+        outcomes: [
+            {
+                title: "A physical interaction model",
+                text: "Instead of switching themes, the user moves the light. The UI responds through coordinated depth cues — shadow direction, softness, glow intensity, and atmospheric mood."
+            },
+            {
+                title: "System-level UI thinking",
+                text: "Solaris demonstrates how global CSS variables can act as design tokens driven by interaction, keeping multiple components visually coherent under one rule set."
+            }
+        ],
+        details: {
+            role: "Concept, Design Direction, Front-end Development",
+            timeline: "Exploratory build (several days)",
+            stack: "React, TypeScript, Tailwind CSS, Motion, CSS Custom Properties",
+            responsibilities:
+                "Interaction model design, light math, atmospheric layering, typographic contrast tuning, card material system, viewport layout control"
+        },
+        links: [
+            { label: "View", href: "https://solar-toggle.vercel.app/" },
+            { label: "Repository", href: "https://github.com/aniiKhachunts/solar-toggle" },
+        ],
+        gallery: [
+            {
+                src: "/images/projects/solaris/hero.png",
+                alt: "Solaris hero with draggable sun controller",
+                caption: "A draggable sun drives atmosphere, depth, and mood across the UI."
+            },
+            {
+                src: "/videos/projects/solaris/interaction.mp4",
+                alt: "Solaris interaction demo",
+                caption: "Crossing the horizon transitions the world from day to night in a single continuous system."
+            }
+        ],
+        story: [
+            {
+                type: "paragraph",
+                title: "The core idea",
+                text:
+                    "Solaris is a premium UI exploration built around one principle: light should drive design, not decorate it. A draggable sun defines a global light vector, and every surface responds — from atmospheric gradients to component shadows and rim highlights — as one coherent system."
+            },
+            {
+                type: "twoCol",
+                leftTitle: "Design direction",
+                left:
+                    "Minimal, typography-led composition with controlled glow. The goal is calm clarity, where light adds depth and mood without turning into visual noise.",
+                rightTitle: "Engineering direction",
+                right:
+                    "A single source of truth powered by CSS custom properties. Components compute their response from shared variables, keeping behavior consistent and scalable across the interface."
+            },
+            {
+                type: "bullets",
+                title: "System mechanics",
+                items: [
+                    "Global --sun-x and --sun-y variables drive lighting across the UI",
+                    "Horizon threshold controls a dusk coefficient for smooth transitions",
+                    "Shadows offset in real time based on the light vector",
+                    "Rim lighting uses masked radial gradients for material edges",
+                    "Viewport-only layout to keep interaction intentional and uninterrupted"
+                ]
+            },
+            {
+                type: "quote",
+                text: "Light should drive design, not decorate it.",
+                author: "Solaris concept"
+            }
+        ]
     }
 ]
-
